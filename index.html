@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jeremy Hart | 8-bit Link Card</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    /* -------------------------------------------------------
+       THEME SYSTEM
+       - Body gets: data-theme="classic|gameboy|dos|arcade"
+       - Selector can be set to auto (day-of-week) or manual
+    --------------------------------------------------------*/
+
+    /* Default (classic) */
+    body{
+      --bg:#0b1020;
+      --panel:#101a33;
+      --panel2:#0e1730;
+      --text:#e7f0ff;
+      --muted:#9fb7ff;
+      --accent:#63ffb8;
+      --danger:#ff6b9a;
+      --border:#2a3b74;
+
+      --frameRadius: 0px;
+      --panelRadius: 0px;
+      --badgeRadius: 0px;
+
+      --glowA: rgba(0,0,0,0);
+      --glowB: rgba(0,0,0,0);
+      --scanOpacity: .35;
+      --showCorners: 1;
+    }
+
+    body[data-theme="gameboy"]{
+      --bg:#0b1a10;
+      --panel:#0f2416;
+      --panel2:#0d1f14;
+      --text:#e8ffd8;
+      --muted:#b7e6a0;
+      --accent:#7cff6b;
+      --danger:#ffb86b;
+      --border:#2c6b3a;
+
+      --frameRadius: 18px;
+      --panelRadius: 12px;
+      --badgeRadius: 12px;
+
+      --glowA: rgba(124,255,107,.12);
+      --glowB: rgba(183,230,160,.08);
+      --scanOpacity: .28;
+      --showCorners: 0;
+    }
+
+    body[data-theme="dos"]{
+      --bg:#05070c;
+      --panel:#05070c;
+      --panel2:#05070c;
+      --text:#c9f6ff;
+      --muted:#72d6ea;
+      --accent:#00f5ff;
+      --danger:#ff5f87;
+      --border:#00a9b2;
+
+      --frameRadius: 0px;
+      --panelRadius: 0px;
+      --badgeRadius: 0px;
+
+      --glowA: rgba(0,245,255,.10);
+      --glowB: rgba(0,245,255,.06);
+      --scanOpacity: .40;
+      --showCorners: 0;
+    }
+
+    body[data-theme="arcade"]{
+      --bg:#070818;
+      --panel:#0d0f2c;
+      --panel2:#090a22;
+      --text:#f2f0ff;
+      --muted:#bdb7ff;
+      --accent:#23f7d2;
+      --danger:#ff4d8d;
+      --border:#3a2cff;
+
+      --frameRadius: 0px;
+      --panelRadius: 0px;
+      --badgeRadius: 0px;
+
+      --glowA: rgba(58,44,255,.25);
+      --glowB: rgba(35,247,210,.12);
+      --scanOpacity: .35;
+      --showCorners: 1;
+    }
+
+    /* -------------------------------------------------------
+       BASE LAYOUT
+    --------------------------------------------------------*/
+    *{box-sizing:border-box}
+    html,body{height:100%}
+
+    body{
+      margin:0;
+      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 25% 20%, var(--glowA) 0%, transparent 35%),
+        radial-gradient(circle at 75% 30%, var(--glowB) 0%, transparent 35%),
+        linear-gradient(180deg, #070b16 0%, var(--bg) 60%, #050814 100%);
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+
+    /* Scanlines */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.03) 0px,
+          rgba(255,255,255,0.03) 1px,
+          rgba(0,0,0,0.06) 2px,
+          rgba(0,0,0,0.06) 3px
+        );
+      opacity:var(--scanOpacity);
+      mix-blend-mode:overlay;
+    }
+
+    /* Vignette */
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:radial-gradient(circle, transparent 0%, rgba(0,0,0,.55) 85%);
+      opacity:.5;
+    }
+
+    .frame{
+      width:min(960px, 100%);
+      border:6px solid var(--border);
+      border-radius: var(--frameRadius);
+      box-shadow:
+        0 18px 0 rgba(0,0,0,.35),
+        0 0 0 6px rgba(0,0,0,.35),
+        0 0 40px rgba(0,0,0,.10);
+      background:linear-gradient(180deg, var(--panel) 0%, var(--panel2) 100%);
+      padding:20px;
+      position:relative;
+    }
+
+    /* Decorative corners (for themes that want it) */
+    .corner{
+      position:absolute;
+      width:14px; height:14px;
+      background:var(--accent);
+      opacity:calc(var(--showCorners) * .9);
+    }
+    .c1{top:-7px; left:-7px}
+    .c2{top:-7px; right:-7px}
+    .c3{bottom:-7px; left:-7px}
+    .c4{bottom:-7px; right:-7px}
+
+    .topbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:14px;
+    }
+
+    .badge{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border:4px solid var(--border);
+      border-radius: var(--badgeRadius);
+      background:rgba(0,0,0,.18);
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+    }
+
+    .title{font-size:18px; line-height:1.4; letter-spacing:1px;}
+    .sub{margin-top:6px; color:var(--muted); font-size:11px; line-height:1.7;}
+    .dialog{font-size:11px; line-height:1.9; color:var(--text);}
+
+    .heart{
+      width:16px; height:16px;
+      background:var(--danger);
+      box-shadow:
+        16px 0 0 var(--danger),
+        0 16px 0 var(--danger),
+        16px 16px 0 var(--danger),
+        8px 8px 0 var(--danger);
+      transform: rotate(45deg);
+      margin-left:6px;
+      opacity:.9;
+    }
+
+    /* Theme switch UI */
+    .switcher{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:14px;
+    }
+    .switcher label{
+      font-size:9px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+    select, button{
+      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-size:9px;
+      color:var(--text);
+      background:rgba(0,0,0,.25);
+      border:3px solid var(--border);
+      padding:10px;
+      cursor:pointer;
+    }
+    button:hover, select:hover{filter:brightness(1.10)}
+    .hint{font-size:8.5px; color:var(--muted); line-height:1.7;}
+
+    /* New: cleaner business-card layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+    }
+    @media (max-width: 820px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .panel{
+      border:4px solid var(--border);
+      border-radius: var(--panelRadius);
+      background:rgba(0,0,0,.18);
+      padding:16px;
+      box-shadow: 8px 8px 0 rgba(0,0,0,.35);
+    }
+
+    .panel h2{
+      margin:0 0 12px 0;
+      font-size:12px;
+      color:var(--accent);
+      letter-spacing:1px;
+    }
+
+    .small{
+      font-size:10px;
+      line-height:1.9;
+      color:var(--text);
+    }
+
+    /* Primary actions: big, readable buttons */
+    .actions{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:10px;
+    }
+    .action{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:14px 12px;
+      border:3px solid var(--border);
+      text-decoration:none;
+      color:var(--text);
+      background:rgba(0,0,0,.22);
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+      transition: transform .08s steps(2), filter .08s steps(2);
+    }
+    .action:hover, .action:focus{
+      outline:none;
+      transform: translate(-2px, -2px);
+      filter: brightness(1.10);
+    }
+    @media (max-width: 520px){
+      .actions{grid-template-columns:1fr;}
+    }
+
+    /* Social links in a tidy grid */
+    .linksGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+
+    .linkTile{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 12px;
+      border:3px solid var(--border);
+      text-decoration:none;
+      color:var(--text);
+      background:rgba(0,0,0,.22);
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+      transition: transform .08s steps(2), filter .08s steps(2);
+    }
+    .linkTile:hover, .linkTile:focus{
+      outline:none;
+      transform: translate(-2px, -2px);
+      filter: brightness(1.10);
+    }
+
+    /* Pixel cursor indicator */
+    .cursor{
+      width:10px; height:10px;
+      background:var(--accent);
+      box-shadow: 10px 0 0 var(--accent), 0 10px 0 var(--accent);
+      transform: rotate(45deg);
+      flex:0 0 auto;
+    }
+
+    .meta{display:grid; gap:10px; font-size:10px; line-height:1.8; color:var(--muted);}
+    .chip{
+      border:3px solid var(--border);
+      padding:10px;
+      background:rgba(0,0,0,.22);
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+    }
+
+    .footer{
+      margin-top:14px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:9px;
+      line-height:1.8;
+    }
+
+    .blink{color:var(--accent); animation: blink 1s steps(2, end) infinite;}
+    @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  </style>
+</head>
+
+<body>
+  <main class="frame" role="main" aria-label="8-bit profile page">
+    <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+
+    <!-- Theme Switcher -->
+    <div class="switcher" aria-label="Theme switcher">
+      <div>
+        <label for="theme">THEME</label><br>
+        <select id="theme" aria-label="Select theme">
+          <option value="auto">AUTO (DAY OF WEEK)</option>
+          <option value="classic">CLASSIC</option>
+          <option value="gameboy">GAME BOY</option>
+          <option value="dos">DOS</option>
+          <option value="arcade">ARCADE</option>
+        </select>
+      </div>
+      <div style="text-align:right;">
+        <button id="reset" type="button">RESET</button><br>
+        <div class="hint">AUTO changes daily. Manual stays.</div>
+      </div>
+    </div>
+
+    <header class="topbar">
+      <div class="badge" aria-label="Player info">
+        <div class="title">
+          JEREMY HART
+          <div class="sub">GILFORD, NH</div>
+        </div>
+        <div class="heart" title="1UP"></div>
+      </div>
+
+      <div class="badge" aria-label="Status">
+        <div class="dialog">
+          STATUS: <span class="blink">ONLINE</span><br>
+          PRESS START: <span class="blink">ENTER</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- New, more readable business-card layout -->
+    <section class="grid">
+      <div class="panel">
+        <h2>CONTACT</h2>
+
+        <div class="actions" aria-label="Primary contact actions">
+          <a class="action" href="tel:+19046080347"><span class="cursor"></span> Call</a>
+          <a class="action" href="sms:+19046080347"><span class="cursor"></span> Text</a>
+          <a class="action" href="mailto:jeremy.allan.hart@gmail.com"><span class="cursor"></span> Email</a>
+          <a class="action" href="jeremy-hart.vcf"><span class="cursor"></span> Add Contact</a>
+        </div>
+
+        <div class="dialog" style="margin-top:14px;">
+          <span class="small">Ops Director in Gilford, NH. Fitness, technology, and theatre nerd. This is my link card for contact, socials, and whatever I’m building.</span><br><br>
+          <span class="blink">SELECT:</span> Choose a link.
+        </div>
+      </div>
+
+      <aside class="panel">
+        <h2>LINKS</h2>
+
+        <div class="linksGrid" aria-label="Social links">
+          <a class="linkTile" href="https://jeremyallanhart.substack.com/" target="_blank" rel="noopener"><span class="cursor"></span> Substack</a>
+          <a class="linkTile" href="https://www.linkedin.com/in/jeremyallanhart/" target="_blank" rel="noopener"><span class="cursor"></span> LinkedIn</a>
+          <a class="linkTile" href="https://x.com/jeremyhart" target="_blank" rel="noopener"><span class="cursor"></span> X (jeremyhart)</a>
+          <a class="linkTile" href="https://www.instagram.com/jeremyallanhart/" target="_blank" rel="noopener"><span class="cursor"></span> Instagram</a>
+          <a class="linkTile" href="https://www.facebook.com/hart.jeremy" target="_blank" rel="noopener"><span class="cursor"></span> Facebook</a>
+        </div>
+
+        <div class="meta" style="margin-top:12px;">
+          <div class="chip">LOCATION: GILFORD, NH</div>
+          <div class="chip">HOST: GITHUB PAGES</div>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> Jeremy Hart</div>
+      <div><span class="blink">INSERT COIN</span></div>
+    </footer>
+  </main>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const themeSelect = document.getElementById("theme");
+    const resetBtn = document.getElementById("reset");
+
+    const themes = ["classic","gameboy","dos","arcade"];
+
+    function autoThemeForToday(){
+      // 0=Sun..6=Sat. Map to one of 4 themes.
+      const day = new Date().getDay();
+      return themes[day % themes.length];
+    }
+
+    function applyTheme(mode){
+      if(mode === "auto"){
+        document.body.setAttribute("data-theme", autoThemeForToday());
+      }else{
+        document.body.setAttribute("data-theme", mode);
+      }
+    }
+
+    // Load saved preference
+    const saved = localStorage.getItem("jh_theme") || "auto";
+    themeSelect.value = saved;
+    applyTheme(saved);
+
+    // Save on change
+    themeSelect.addEventListener("change", () => {
+      const val = themeSelect.value;
+      localStorage.setItem("jh_theme", val);
+      applyTheme(val);
+    });
+
+    // Reset to auto
+    resetBtn.addEventListener("click", () => {
+      localStorage.setItem("jh_theme", "auto");
+      themeSelect.value = "auto";
+      applyTheme("auto");
+    });
+  </script>
+</body>
+</html>
