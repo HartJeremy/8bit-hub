@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Hart;Jeremy;;;
+FN:Jeremy Hart
+ORG:The Laconia Daily Sun
+TITLE:Operations Director
+EMAIL;TYPE=WORK,INTERNET:jeremy@laconiadailysun.com
+TEL;TYPE=WORK,VOICE:+1-603-524-0156
+TEL;TYPE=CELL,VOICE:+1-904-608-0347
+ADR;TYPE=WORK:;;781 Union Ave;Laconia;NH;03246;United States
+URL:https://www.laconiadailysun.com
+END:VCARD
