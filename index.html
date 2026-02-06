@@ -5,20 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jeremy Hart | Link Card</title>
 
-  <!-- Retro font (only used when a retro theme is selected) -->
+  <!-- Fonts (used only by specific themes) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    /* =========================
+    /* ======================================================
        THEMES
-       Default: modern, minimal.
-       Retro themes exist but are hidden behind footer "Themes"
-       URL param supported: ?theme=modern|classic|gameboy|dos|arcade
-    ==========================*/
+       Default: modern
+       Optional: arcade (game vibe)
+       Decades: seventies, eighties, nineties
+       URL: ?theme=modern|arcade|seventies|eighties|nineties
+
+       Rule: if background goes light/white, text is dark.
+    =======================================================*/
 
     body{
+      /* Modern defaults */
       --bg:#f4f6f8;
       --surface:#ffffff;
       --surface2:#f8fafc;
@@ -26,9 +30,10 @@
       --muted:#475569;
       --border:#e2e8f0;
       --accent:#2563eb;
-      --accent2:#0ea5e9;
+
       --shadow: 0 10px 30px rgba(0,0,0,.08);
       --shadow2: 0 6px 18px rgba(0,0,0,.06);
+
       --radius: 16px;
       --radius2: 12px;
 
@@ -40,100 +45,40 @@
       --panelBorderWidth: 1px;
 
       --usePixelCorners: 0;
-    }
+      --useChunkyShadow: 0;
 
-    body[data-theme="modern"]{
-      --scanOpacity: 0;
-      --usePixelCorners: 0;
-      --glowA: rgba(37,99,235,.10);
-      --glowB: rgba(14,165,233,.08);
+      /* Extra “theme effects” toggles */
+      --gridOpacity: 0;
+      --grainOpacity: 0;
+      --noiseOpacity: 0;
+
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
     }
 
-    body[data-theme="classic"]{
-      --bg:#0b1020;
-      --surface:#101a33;
-      --surface2:#0e1730;
-      --text:#e7f0ff;
-      --muted:#9fb7ff;
-      --border:#2a3b74;
-      --accent:#63ffb8;
-      --accent2:#63ffb8;
+    body[data-theme="modern"]{
+      --bg:#f4f6f8;
+      --surface:#ffffff;
+      --surface2:#f8fafc;
+      --text:#0f172a;       /* dark text on light background */
+      --muted:#475569;
+      --border:#e2e8f0;
+      --accent:#2563eb;
 
-      --shadow: 0 18px 0 rgba(0,0,0,.35), 0 0 0 6px rgba(0,0,0,.35), 0 0 40px rgba(0,0,0,.10);
-      --shadow2: 8px 8px 0 rgba(0,0,0,.35);
+      --scanOpacity: 0;
+      --gridOpacity: 0;
+      --grainOpacity: 0;
+      --noiseOpacity: 0;
 
-      --radius: 0px;
-      --radius2: 0px;
-
-      --scanOpacity: .35;
-      --glowA: rgba(99,255,184,.10);
-      --glowB: rgba(159,183,255,.08);
-
-      --frameBorderWidth: 6px;
-      --panelBorderWidth: 4px;
-
-      --usePixelCorners: 1;
-
-      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-
-    body[data-theme="gameboy"]{
-      --bg:#0b1a10;
-      --surface:#0f2416;
-      --surface2:#0d1f14;
-      --text:#e8ffd8;
-      --muted:#b7e6a0;
-      --border:#2c6b3a;
-      --accent:#7cff6b;
-      --accent2:#b7e6a0;
-
-      --shadow: 0 18px 0 rgba(0,0,0,.35), 0 0 0 6px rgba(0,0,0,.35), 0 0 40px rgba(0,0,0,.10);
-      --shadow2: 8px 8px 0 rgba(0,0,0,.35);
-
-      --radius: 18px;
-      --radius2: 12px;
-
-      --scanOpacity: .25;
-      --glowA: rgba(124,255,107,.12);
-      --glowB: rgba(183,230,160,.08);
-
-      --frameBorderWidth: 6px;
-      --panelBorderWidth: 4px;
+      --glowA: rgba(37,99,235,.10);
+      --glowB: rgba(14,165,233,.08);
 
       --usePixelCorners: 0;
+      --useChunkyShadow: 0;
 
-      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
     }
 
-    body[data-theme="dos"]{
-      --bg:#05070c;
-      --surface:#05070c;
-      --surface2:#05070c;
-      --text:#c9f6ff;
-      --muted:#72d6ea;
-      --border:#00a9b2;
-      --accent:#00f5ff;
-      --accent2:#00f5ff;
-
-      --shadow: 0 18px 0 rgba(0,0,0,.35), 0 0 0 6px rgba(0,0,0,.35), 0 0 40px rgba(0,0,0,.10);
-      --shadow2: 8px 8px 0 rgba(0,0,0,.35);
-
-      --radius: 0px;
-      --radius2: 0px;
-
-      --scanOpacity: .40;
-      --glowA: rgba(0,245,255,.08);
-      --glowB: rgba(0,245,255,.05);
-
-      --frameBorderWidth: 6px;
-      --panelBorderWidth: 4px;
-
-      --usePixelCorners: 0;
-
-      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-
+    /* Arcade: one game theme */
     body[data-theme="arcade"]{
       --bg:#070818;
       --surface:#0d0f2c;
@@ -142,7 +87,6 @@
       --muted:#bdb7ff;
       --border:#3a2cff;
       --accent:#23f7d2;
-      --accent2:#ff4d8d;
 
       --shadow: 0 18px 0 rgba(0,0,0,.35), 0 0 0 6px rgba(0,0,0,.35), 0 0 40px rgba(0,0,0,.10);
       --shadow2: 8px 8px 0 rgba(0,0,0,.35);
@@ -150,7 +94,11 @@
       --radius: 0px;
       --radius2: 0px;
 
-      --scanOpacity: .35;
+      --scanOpacity: .33;
+      --gridOpacity: 0;
+      --grainOpacity: 0;
+      --noiseOpacity: .10;
+
       --glowA: rgba(58,44,255,.22);
       --glowB: rgba(35,247,210,.12);
 
@@ -158,13 +106,113 @@
       --panelBorderWidth: 4px;
 
       --usePixelCorners: 1;
+      --useChunkyShadow: 1;
 
       font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
-    /* =========================
+    /* 70s: funky typography + warm paper + punchy accents */
+    body[data-theme="seventies"]{
+      --bg:#f7e6c4;
+      --surface:#fff3d6;
+      --surface2:#fbe6bf;
+      --text:#2f1f16;       /* dark readable on light */
+      --muted:#5a3b2c;
+      --border:#d6b47f;
+      --accent:#e05a2b;
+
+      --shadow: 0 14px 30px rgba(55,30,10,.18);
+      --shadow2: 0 10px 20px rgba(55,30,10,.12);
+
+      --radius: 26px;
+      --radius2: 18px;
+
+      --scanOpacity: 0;
+      --gridOpacity: 0;
+      --grainOpacity: .28;  /* paper grain */
+      --noiseOpacity: 0;
+
+      --glowA: rgba(224,90,43,.18);
+      --glowB: rgba(90,59,44,.10);
+
+      --frameBorderWidth: 2px;
+      --panelBorderWidth: 2px;
+
+      --usePixelCorners: 0;
+      --useChunkyShadow: 0;
+
+      font-family: "Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+    }
+
+    /* 80s: neon grid + chrome-ish accents */
+    body[data-theme="eighties"]{
+      --bg:#030414;
+      --surface:#0a0b26;
+      --surface2:#07081f;
+      --text:#f9f4ff;
+      --muted:#e0d2ff;
+      --border:#3cffeb;
+      --accent:#ff4fd8;
+
+      --shadow: 0 22px 50px rgba(0,0,0,.45);
+      --shadow2: 0 16px 34px rgba(0,0,0,.32);
+
+      --radius: 18px;
+      --radius2: 14px;
+
+      --scanOpacity: .08;
+      --gridOpacity: .55;   /* neon grid ON */
+      --grainOpacity: 0;
+      --noiseOpacity: .08;
+
+      --glowA: rgba(255,79,216,.25);
+      --glowB: rgba(60,255,235,.22);
+
+      --frameBorderWidth: 2px;
+      --panelBorderWidth: 1px;
+
+      --usePixelCorners: 0;
+      --useChunkyShadow: 0;
+
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+    }
+
+    /* 90s: beveled buttons + “web 1.0” UI */
+    body[data-theme="nineties"]{
+      --bg:#cfd7e6;
+      --surface:#e8edf6;
+      --surface2:#dfe6f3;
+      --text:#0b1833;       /* dark readable on light */
+      --muted:#2a4a78;
+      --border:#7a8fb5;
+      --accent:#0a58ff;
+
+      --shadow: 0 8px 0 rgba(0,0,0,.18), 0 16px 30px rgba(0,0,0,.12);
+      --shadow2: 0 5px 0 rgba(0,0,0,.15), 0 10px 18px rgba(0,0,0,.10);
+
+      --radius: 10px;
+      --radius2: 10px;
+
+      --scanOpacity: 0;
+      --gridOpacity: 0;
+      --grainOpacity: 0;
+      --noiseOpacity: 0;
+
+      --glowA: rgba(10,88,255,.10);
+      --glowB: rgba(122,143,181,.12);
+
+      --frameBorderWidth: 2px;
+      --panelBorderWidth: 2px;
+
+      --usePixelCorners: 0;
+      --useChunkyShadow: 0;
+
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    /* ======================================================
        BASE LAYOUT
-    ==========================*/
+    =======================================================*/
     *{box-sizing:border-box}
     html,body{height:100%}
 
@@ -172,14 +220,30 @@
       margin:0;
       color:var(--text);
       background:
-        radial-gradient(circle at 20% 15%, var(--glowA) 0%, transparent 35%),
-        radial-gradient(circle at 80% 25%, var(--glowB) 0%, transparent 40%),
+        radial-gradient(circle at 18% 12%, var(--glowA) 0%, transparent 38%),
+        radial-gradient(circle at 82% 18%, var(--glowB) 0%, transparent 42%),
         linear-gradient(180deg, #ffffff 0%, var(--bg) 60%, #eef2f7 100%);
       display:grid;
       place-items:center;
       padding:24px;
     }
 
+    /* Neon grid overlay (80s theme) */
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:var(--gridOpacity);
+      background:
+        linear-gradient(to bottom, rgba(255,79,216,.0) 0%, rgba(255,79,216,.0) 60%, rgba(255,79,216,.25) 100%),
+        repeating-linear-gradient(to right, rgba(60,255,235,.18) 0px, rgba(60,255,235,.18) 1px, rgba(0,0,0,0) 60px),
+        repeating-linear-gradient(to bottom, rgba(60,255,235,.12) 0px, rgba(60,255,235,.12) 1px, rgba(0,0,0,0) 60px);
+      mix-blend-mode: screen;
+      filter: blur(.1px);
+    }
+
+    /* Scanlines/noise overlay (Arcade/80s) */
     body::before{
       content:"";
       position:fixed;
@@ -192,9 +256,25 @@
           rgba(255,255,255,0.03) 1px,
           rgba(0,0,0,0.06) 2px,
           rgba(0,0,0,0.06) 3px
-        );
+        ),
+        radial-gradient(circle at 30% 40%, rgba(255,255,255,.04) 0%, rgba(0,0,0,0) 45%),
+        radial-gradient(circle at 70% 60%, rgba(255,255,255,.03) 0%, rgba(0,0,0,0) 45%);
       opacity:var(--scanOpacity);
       mix-blend-mode:overlay;
+    }
+
+    /* Grain overlay (70s) */
+    .grain{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:var(--grainOpacity);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(0,0,0,.06) 0%, rgba(0,0,0,0) 35%),
+        radial-gradient(circle at 80% 30%, rgba(0,0,0,.05) 0%, rgba(0,0,0,0) 40%),
+        radial-gradient(circle at 40% 80%, rgba(0,0,0,.04) 0%, rgba(0,0,0,0) 40%),
+        repeating-linear-gradient(45deg, rgba(0,0,0,.02) 0px, rgba(0,0,0,.02) 1px, rgba(0,0,0,0) 6px);
+      mix-blend-mode:multiply;
     }
 
     .card{
@@ -205,8 +285,10 @@
       box-shadow: var(--shadow);
       padding:24px;
       position:relative;
+      isolation:isolate;
     }
 
+    /* Arcade pixel corners */
     .corner{
       position:absolute;
       width:14px; height:14px;
@@ -230,11 +312,31 @@
       border-bottom:1px solid var(--border);
     }
 
+    body[data-theme="arcade"] header{
+      border-bottom:4px solid var(--border);
+    }
+    body[data-theme="seventies"] header{
+      border-bottom:2px dashed rgba(47,31,22,.35);
+    }
+    body[data-theme="eighties"] header{
+      border-bottom:1px solid rgba(60,255,235,.55);
+      box-shadow: 0 10px 0 rgba(255,79,216,.10);
+    }
+    body[data-theme="nineties"] header{
+      border-bottom:2px solid var(--border);
+    }
+
     .identity h1{
       margin:0;
       font-size:28px;
       letter-spacing:.2px;
       line-height:1.2;
+    }
+
+    body[data-theme="seventies"] .identity h1{
+      font-size:34px;
+      letter-spacing:.6px;
+      text-transform:uppercase;
     }
 
     .identity .metaLine{
@@ -252,6 +354,40 @@
       min-width: 260px;
       box-shadow: var(--shadow2);
     }
+
+    /* Arcade info box */
+    body[data-theme="arcade"] .infoBox{
+      border:4px solid var(--border);
+      border-radius: 0px;
+      background: rgba(0,0,0,.18);
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+    }
+
+    /* 70s info box gets a “sticker” feel */
+    body[data-theme="seventies"] .infoBox{
+      border:2px solid rgba(47,31,22,.25);
+      background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.25));
+      box-shadow: 0 14px 0 rgba(90,59,44,.10);
+    }
+
+    /* 80s info box gets neon stroke */
+    body[data-theme="eighties"] .infoBox{
+      border:1px solid rgba(60,255,235,.75);
+      box-shadow:
+        0 0 0 3px rgba(60,255,235,.15),
+        0 0 28px rgba(255,79,216,.18);
+      background: rgba(7,8,31,.72);
+      backdrop-filter: blur(6px);
+    }
+
+    /* 90s info box bevel */
+    body[data-theme="nineties"] .infoBox{
+      border:2px solid var(--border);
+      border-radius: 10px;
+      background: linear-gradient(180deg, #f7f9ff, #dbe4f6);
+      box-shadow: 2px 2px 0 rgba(0,0,0,.18);
+    }
+
     .infoBox .label{
       font-size:12px;
       color:var(--muted);
@@ -284,11 +420,29 @@
       padding:18px;
     }
 
-    body[data-theme="classic"] section,
-    body[data-theme="gameboy"] section,
-    body[data-theme="dos"] section,
+    /* Arcade panels */
     body[data-theme="arcade"] section{
+      border:4px solid var(--border);
+      border-radius: 0px;
+      background: rgba(0,0,0,.18);
       box-shadow: 8px 8px 0 rgba(0,0,0,.35);
+    }
+
+    /* 80s panels */
+    body[data-theme="eighties"] section{
+      background: rgba(10,11,38,.75);
+      border: 1px solid rgba(60,255,235,.55);
+      box-shadow:
+        0 0 0 3px rgba(60,255,235,.10),
+        0 0 34px rgba(255,79,216,.16);
+      backdrop-filter: blur(6px);
+    }
+
+    /* 90s panels bevel */
+    body[data-theme="nineties"] section{
+      background: linear-gradient(180deg, #f7f9ff, #dbe4f6);
+      border:2px solid var(--border);
+      box-shadow: 2px 2px 0 rgba(0,0,0,.18);
     }
 
     section h2{
@@ -297,11 +451,21 @@
       letter-spacing:.2px;
     }
 
+    body[data-theme="seventies"] section h2{
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+
     .bio{
       color:var(--muted);
       font-size:14px;
       line-height:1.7;
       margin:0;
+    }
+
+    body[data-theme="arcade"] .bio{
+      font-size:12px;
     }
 
     .actions{
@@ -341,15 +505,68 @@
       outline-offset: 2px;
     }
 
+    /* Primary buttons */
     .btn.primary{
       background: linear-gradient(180deg, rgba(37,99,235,.10), rgba(37,99,235,.04));
       border-color: rgba(37,99,235,.35);
     }
 
-    /* Retro buttons */
-    body[data-theme="classic"] .btn,
-    body[data-theme="gameboy"] .btn,
-    body[data-theme="dos"] .btn,
+    /* 70s buttons: fat + playful */
+    body[data-theme="seventies"] .btn{
+      border-radius: 999px;
+      border:2px solid rgba(47,31,22,.30);
+      background: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.30));
+      box-shadow: 0 10px 0 rgba(90,59,44,.10);
+      font-weight: 600;
+    }
+    body[data-theme="seventies"] .btn.primary{
+      border-color: rgba(224,90,43,.35);
+      box-shadow: 0 10px 0 rgba(224,90,43,.12);
+    }
+
+    /* 80s buttons: neon outline + glow */
+    body[data-theme="eighties"] .btn{
+      border-radius: 14px;
+      background: rgba(7,8,31,.55);
+      border:1px solid rgba(60,255,235,.70);
+      box-shadow:
+        0 0 0 3px rgba(60,255,235,.12),
+        0 0 24px rgba(255,79,216,.18);
+      color: var(--text);
+    }
+    body[data-theme="eighties"] .btn.primary{
+      border-color: rgba(255,79,216,.70);
+      box-shadow:
+        0 0 0 3px rgba(255,79,216,.12),
+        0 0 28px rgba(60,255,235,.18);
+    }
+    body[data-theme="eighties"] .btn:hover{
+      box-shadow:
+        0 0 0 3px rgba(60,255,235,.18),
+        0 0 36px rgba(255,79,216,.26);
+      transform: translateY(-1px);
+    }
+
+    /* 90s buttons: bevel */
+    body[data-theme="nineties"] .btn{
+      border-radius: 6px;
+      border:2px solid var(--border);
+      background: linear-gradient(180deg, #ffffff, #d7e1f6);
+      box-shadow:
+        inset 2px 2px 0 rgba(255,255,255,.75),
+        inset -2px -2px 0 rgba(0,0,0,.15),
+        2px 2px 0 rgba(0,0,0,.18);
+      font-weight: 700;
+    }
+    body[data-theme="nineties"] .btn:active{
+      transform: translateY(1px);
+      box-shadow:
+        inset -2px -2px 0 rgba(255,255,255,.55),
+        inset 2px 2px 0 rgba(0,0,0,.18),
+        1px 1px 0 rgba(0,0,0,.18);
+    }
+
+    /* Arcade buttons */
     body[data-theme="arcade"] .btn{
       border-radius: 0px;
       border:3px solid var(--border);
@@ -357,9 +574,6 @@
       box-shadow: 6px 6px 0 rgba(0,0,0,.35);
       font-weight: 400;
     }
-    body[data-theme="classic"] .btn.primary,
-    body[data-theme="gameboy"] .btn.primary,
-    body[data-theme="dos"] .btn.primary,
     body[data-theme="arcade"] .btn.primary{
       background: rgba(0,0,0,.22);
       border-color: var(--border);
@@ -398,16 +612,52 @@
       white-space:nowrap;
     }
 
-    /* Retro links */
-    body[data-theme="classic"] .link,
-    body[data-theme="gameboy"] .link,
-    body[data-theme="dos"] .link,
+    /* 80s links: neon */
+    body[data-theme="eighties"] .link{
+      background: rgba(7,8,31,.55);
+      border:1px solid rgba(60,255,235,.70);
+      box-shadow:
+        0 0 0 3px rgba(60,255,235,.10),
+        0 0 22px rgba(255,79,216,.16);
+    }
+    body[data-theme="eighties"] .link:hover{
+      box-shadow:
+        0 0 0 3px rgba(60,255,235,.18),
+        0 0 32px rgba(255,79,216,.24);
+    }
+
+    /* 90s links bevel */
+    body[data-theme="nineties"] .link{
+      border-radius: 6px;
+      border:2px solid var(--border);
+      background: linear-gradient(180deg, #ffffff, #d7e1f6);
+      box-shadow:
+        inset 2px 2px 0 rgba(255,255,255,.75),
+        inset -2px -2px 0 rgba(0,0,0,.15),
+        2px 2px 0 rgba(0,0,0,.18);
+    }
+    body[data-theme="nineties"] .link:active{
+      transform: translateY(1px);
+    }
+
+    /* 70s links: pill + sticker */
+    body[data-theme="seventies"] .link{
+      border-radius: 999px;
+      border:2px solid rgba(47,31,22,.28);
+      background: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.30));
+      box-shadow: 0 10px 0 rgba(90,59,44,.10);
+      font-weight: 600;
+    }
+
+    /* Arcade links */
     body[data-theme="arcade"] .link{
       border-radius: 0px;
       border:3px solid var(--border);
       background: rgba(0,0,0,.18);
       box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+      font-size:12px;
     }
+    body[data-theme="arcade"] .link .hint{font-size:10px;}
 
     footer{
       margin-top:16px;
@@ -422,6 +672,11 @@
       font-size:12px;
     }
 
+    body[data-theme="arcade"] footer{ border-top:4px solid var(--border); }
+    body[data-theme="seventies"] footer{ border-top:2px dashed rgba(47,31,22,.30); }
+    body[data-theme="eighties"] footer{ border-top:1px solid rgba(60,255,235,.55); }
+    body[data-theme="nineties"] footer{ border-top:2px solid var(--border); }
+
     .kbd{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size:12px;
@@ -433,6 +688,23 @@
       display:inline-flex;
       align-items:center;
       gap:6px;
+    }
+
+    body[data-theme="arcade"] .kbd{
+      border:3px solid var(--border);
+      border-radius:0px;
+      background: rgba(0,0,0,.18);
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+      font-size:10px;
+    }
+
+    body[data-theme="nineties"] .kbd{
+      border-radius: 6px;
+      border:2px solid var(--border);
+      background: linear-gradient(180deg, #ffffff, #d7e1f6);
+      box-shadow:
+        inset 2px 2px 0 rgba(255,255,255,.75),
+        inset -2px -2px 0 rgba(0,0,0,.15);
     }
 
     .themeArea{
@@ -471,49 +743,50 @@
       cursor:pointer;
     }
 
+    body[data-theme="eighties"] .themePicker select{
+      background: rgba(7,8,31,.55);
+      border:1px solid rgba(60,255,235,.70);
+      box-shadow: 0 0 0 3px rgba(60,255,235,.10);
+      border-radius: 14px;
+      color: var(--text);
+    }
+
+    body[data-theme="nineties"] .themePicker select{
+      border:2px solid var(--border);
+      border-radius: 6px;
+      background: linear-gradient(180deg, #ffffff, #d7e1f6);
+      box-shadow:
+        inset 2px 2px 0 rgba(255,255,255,.75),
+        inset -2px -2px 0 rgba(0,0,0,.15);
+    }
+
+    body[data-theme="arcade"] .themePicker select{
+      border:3px solid var(--border);
+      border-radius:0px;
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+    }
+
     .themePicker .tiny{
       font-size:11px;
       color:var(--muted);
       white-space:nowrap;
     }
 
-    /* Retro readability */
-    body[data-theme="classic"] .identity h1,
-    body[data-theme="gameboy"] .identity h1,
-    body[data-theme="dos"] .identity h1,
-    body[data-theme="arcade"] .identity h1{
-      font-size:20px;
-      line-height:1.4;
-    }
-    body[data-theme="classic"] .bio,
-    body[data-theme="gameboy"] .bio,
-    body[data-theme="dos"] .bio,
-    body[data-theme="arcade"] .bio{
-      font-size:12px;
-    }
-    body[data-theme="classic"] .link,
-    body[data-theme="gameboy"] .link,
-    body[data-theme="dos"] .link,
-    body[data-theme="arcade"] .link{
-      font-size:12px;
-    }
-    body[data-theme="classic"] .link .hint,
-    body[data-theme="gameboy"] .link .hint,
-    body[data-theme="dos"] .link .hint,
-    body[data-theme="arcade"] .link .hint{
-      font-size:10px;
-    }
+    /* Accessibility: ensure link text is always readable */
+    a{ color: inherit; }
 
-    /* Pixel corners only for classic + arcade */
-    body[data-theme="classic"] .corner,
-    body[data-theme="arcade"] .corner{opacity:.9}
-    body[data-theme="modern"] .corner,
-    body[data-theme="gameboy"] .corner,
-    body[data-theme="dos"] .corner{opacity:0}
+    /* Make the 70s theme feel “funky” without sacrificing readability */
+    body[data-theme="seventies"] .identity .metaLine{
+      font-size:15px;
+      letter-spacing:.3px;
+    }
   </style>
 </head>
 
 <body>
+  <div class="grain" aria-hidden="true"></div>
+
   <main class="card" role="main" aria-label="Jeremy Hart link card">
     <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
 
@@ -581,12 +854,12 @@
         <div class="themePicker" id="themePicker" aria-label="Theme picker">
           <select id="themeSelect" aria-label="Select theme">
             <option value="modern">Modern</option>
-            <option value="classic">Classic</option>
-            <option value="gameboy">Game Boy</option>
-            <option value="dos">DOS</option>
             <option value="arcade">Arcade</option>
+            <option value="seventies">70s</option>
+            <option value="eighties">80s</option>
+            <option value="nineties">90s</option>
           </select>
-          <span class="tiny">Tip: add <code>?theme=dos</code> to the URL</span>
+          <span class="tiny">Tip: add <code>?theme=eighties</code> to the URL</span>
         </div>
       </div>
     </footer>
@@ -595,8 +868,8 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    const THEMES = ["modern","classic","gameboy","dos","arcade"];
-    const RETRO = ["classic","gameboy","dos","arcade"];
+    const THEMES = ["modern","arcade","seventies","eighties","nineties"];
+    const ARCADE = "arcade";
 
     const themeToggleBtn = document.getElementById("themeToggle");
     const themePicker = document.getElementById("themePicker");
@@ -617,11 +890,18 @@
       const value = document.getElementById("infoValue");
       if (!label || !value) return;
 
-      const isRetro = RETRO.includes(theme);
-
-      if (isRetro){
+      if (theme === ARCADE){
         label.textContent = "PRESS START";
         value.textContent = "ENTER";
+      } else if (theme === "eighties"){
+        label.textContent = "RAD MODE";
+        value.textContent = "Neon • Synth • Links";
+      } else if (theme === "seventies"){
+        label.textContent = "GOOD VIBES";
+        value.textContent = "Fitness • Tech • Theatre";
+      } else if (theme === "nineties"){
+        label.textContent = "WELCOME";
+        value.textContent = "Best viewed with curiosity";
       } else {
         label.textContent = "About";
         value.textContent = "Fitness • Technology • Theatre";
@@ -650,7 +930,7 @@
       localStorage.setItem("jh_theme", val);
     });
 
-    // Enter key matches PRESS START in retro themes and is a handy shortcut in modern
+    // Enter key: Arcade uses it as "PRESS START", others use it as a shortcut
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Enter") return;
 
