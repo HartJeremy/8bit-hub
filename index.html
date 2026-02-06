@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jeremy Hart | 8-bit Link Card</title>
+  <title>Jeremy Hart | Link Card</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,8 +12,9 @@
   <style>
     /* -------------------------------------------------------
        THEME SYSTEM
-       - Body gets: data-theme="classic|gameboy|dos|arcade"
-       - Selector can be set to auto (day-of-week) or manual
+       - Body gets: data-theme="classic|gameboy|dos|arcade|modern"
+       - Selector can be set to auto (day-of-week + work hours) or manual
+       - URL param can force per-visit: ?theme=modern
     --------------------------------------------------------*/
 
     /* Default (classic) */
@@ -95,6 +96,26 @@
       --glowB: rgba(35,247,210,.12);
       --scanOpacity: .35;
       --showCorners: 1;
+    }
+
+    body[data-theme="modern"]{
+      --bg:#f4f6f8;
+      --panel:#ffffff;
+      --panel2:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --accent:#2563eb;
+      --danger:#dc2626;
+      --border:#e2e8f0;
+
+      --frameRadius: 16px;
+      --panelRadius: 12px;
+      --badgeRadius: 12px;
+
+      --glowA: rgba(0,0,0,0);
+      --glowB: rgba(0,0,0,0);
+      --scanOpacity: 0;
+      --showCorners: 0;
     }
 
     /* -------------------------------------------------------
@@ -345,11 +366,40 @@
 
     .blink{color:var(--accent); animation: blink 1s steps(2, end) infinite;}
     @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+    /* -------------------------------------------------------
+       Modern theme refinements (makes it feel truly modern)
+    --------------------------------------------------------*/
+    body[data-theme="modern"]{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+    }
+    body[data-theme="modern"]::after{opacity:.12;}
+    body[data-theme="modern"] .cursor{display:none;}
+    body[data-theme="modern"] .blink{animation:none;}
+    body[data-theme="modern"] .frame{
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+    body[data-theme="modern"] .panel,
+    body[data-theme="modern"] .badge{
+      background:#f8fafc;
+      box-shadow:none;
+    }
+    body[data-theme="modern"] .action,
+    body[data-theme="modern"] .linkTile,
+    body[data-theme="modern"] .chip{
+      background:#ffffff;
+      box-shadow:none;
+    }
+    body[data-theme="modern"] select,
+    body[data-theme="modern"] button{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      background:#ffffff;
+    }
   </style>
 </head>
 
 <body>
-  <main class="frame" role="main" aria-label="8-bit profile page">
+  <main class="frame" role="main" aria-label="Link card">
     <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
 
     <!-- Theme Switcher -->
@@ -357,21 +407,22 @@
       <div>
         <label for="theme">THEME</label><br>
         <select id="theme" aria-label="Select theme">
-          <option value="auto">AUTO (DAY OF WEEK)</option>
+          <option value="auto">AUTO</option>
           <option value="classic">CLASSIC</option>
           <option value="gameboy">GAME BOY</option>
           <option value="dos">DOS</option>
           <option value="arcade">ARCADE</option>
+          <option value="modern">MODERN</option>
         </select>
       </div>
       <div style="text-align:right;">
         <button id="reset" type="button">RESET</button><br>
-        <div class="hint">AUTO changes daily. Manual stays.</div>
+        <div class="hint">AUTO: Modern during work hours.</div>
       </div>
     </div>
 
     <header class="topbar">
-      <div class="badge" aria-label="Player info">
+      <div class="badge" aria-label="Identity">
         <div class="title">
           JEREMY HART
           <div class="sub">GILFORD, NH</div>
@@ -387,7 +438,6 @@
       </div>
     </header>
 
-    <!-- New, more readable business-card layout -->
     <section class="grid">
       <div class="panel">
         <h2>CONTACT</h2>
@@ -408,10 +458,10 @@
       <aside class="panel">
         <h2>LINKS</h2>
 
-        <div class="linksGrid" aria-label="Social links">
+        <div class="linksGrid" aria-label="Links">
           <a class="linkTile" href="https://jeremyallanhart.substack.com/" target="_blank" rel="noopener"><span class="cursor"></span> Substack</a>
           <a class="linkTile" href="https://www.linkedin.com/in/jeremyallanhart/" target="_blank" rel="noopener"><span class="cursor"></span> LinkedIn</a>
-          <a class="linkTile" href="https://x.com/jeremyhart" target="_blank" rel="noopener"><span class="cursor"></span> X (jeremyhart)</a>
+          <a class="linkTile" href="https://x.com/jeremyhart" target="_blank" rel="noopener"><span class="cursor"></span> X </a>
           <a class="linkTile" href="https://www.instagram.com/jeremyallanhart/" target="_blank" rel="noopener"><span class="cursor"></span> Instagram</a>
           <a class="linkTile" href="https://www.facebook.com/hart.jeremy" target="_blank" rel="noopener"><span class="cursor"></span> Facebook</a>
         </div>
@@ -436,40 +486,73 @@
     const themeSelect = document.getElementById("theme");
     const resetBtn = document.getElementById("reset");
 
-    const themes = ["classic","gameboy","dos","arcade"];
+    // Themes available for manual forcing and validation
+    const themes = ["classic", "gameboy", "dos", "arcade", "modern"];
+    const retroThemes = ["classic", "gameboy", "dos", "arcade"];
 
-    function autoThemeForToday(){
-      // 0=Sun..6=Sat. Map to one of 4 themes.
-      const day = new Date().getDay();
-      return themes[day % themes.length];
+    function isWorkHours(now = new Date()){
+      // Mon-Fri, 9:00 to 17:59 (local time)
+      const day = now.getDay(); // 0 Sun .. 6 Sat
+      const hour = now.getHours();
+      const weekday = day >= 1 && day <= 5;
+      return weekday && hour >= 9 && hour < 18;
     }
 
-    function applyTheme(mode){
-      if(mode === "auto"){
-        document.body.setAttribute("data-theme", autoThemeForToday());
-      }else{
-        document.body.setAttribute("data-theme", mode);
+    function autoThemeForNow(){
+      // Work hours => modern; otherwise rotate retro by day of week
+      if (isWorkHours()) return "modern";
+      const day = new Date().getDay(); // 0..6
+      return retroThemes[day % retroThemes.length];
+    }
+
+    function applyTheme(theme){
+      document.body.setAttribute("data-theme", theme);
+    }
+
+    function applyMode(mode){
+      if (mode === "auto") {
+        applyTheme(autoThemeForNow());
+      } else {
+        applyTheme(mode);
       }
     }
 
-    // Load saved preference
-    const saved = localStorage.getItem("jh_theme") || "auto";
-    themeSelect.value = saved;
-    applyTheme(saved);
+    // 1) URL param overrides everything: ?theme=modern
+    // (Does NOT write to localStorage, so it's per-visit unless user changes the dropdown)
+    const urlThemeRaw = new URLSearchParams(window.location.search).get("theme");
+    const urlTheme = (urlThemeRaw || "").toLowerCase();
 
-    // Save on change
+    if (themes.includes(urlTheme)) {
+      themeSelect.value = urlTheme;
+      applyTheme(urlTheme);
+    } else {
+      // 2) Otherwise, use saved preference (or auto)
+      const saved = localStorage.getItem("jh_theme") || "auto";
+      themeSelect.value = saved;
+      applyMode(saved);
+    }
+
+    // Save on change (manual choice sticks)
     themeSelect.addEventListener("change", () => {
       const val = themeSelect.value;
       localStorage.setItem("jh_theme", val);
-      applyTheme(val);
+      applyMode(val);
     });
 
     // Reset to auto
     resetBtn.addEventListener("click", () => {
       localStorage.setItem("jh_theme", "auto");
       themeSelect.value = "auto";
-      applyTheme("auto");
+      applyMode("auto");
     });
+
+    // If left on AUTO, refresh theme periodically (handles crossing into/out of work hours)
+    setInterval(() => {
+      const forced = new URLSearchParams(window.location.search).get("theme");
+      if (!forced && themeSelect.value === "auto") {
+        applyMode("auto");
+      }
+    }, 60 * 1000);
   </script>
 </body>
 </html>
