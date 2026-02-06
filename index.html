@@ -5,8 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jeremy Hart | Link Card</title>
 
+  <!-- Retro font (only used when a retro theme is selected) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
   <style>
-    :root{
+    /* ======================================================
+       THEME SYSTEM
+       Work-safe by default (modern).
+       Retro themes are available via hidden footer control
+       and via URL: ?theme=modern|classic|gameboy|dos|arcade
+    =======================================================*/
+
+    /* Default variables = modern */
+    body{
       --bg:#f4f6f8;
       --surface:#ffffff;
       --surface2:#f8fafc;
@@ -19,8 +32,141 @@
       --shadow2: 0 6px 18px rgba(0,0,0,.06);
       --radius: 16px;
       --radius2: 12px;
+
+      --scanOpacity: 0;
+      --glowA: rgba(0,0,0,0);
+      --glowB: rgba(0,0,0,0);
+
+      --frameBorderWidth: 1px;
+      --panelBorderWidth: 1px;
+
+      --useRetroFont: 0;
+      --useRetroShadows: 0;
+      --usePixelCorners: 0;
     }
 
+    body[data-theme="modern"]{
+      --useRetroFont: 0;
+      --useRetroShadows: 0;
+      --usePixelCorners: 0;
+      --scanOpacity: 0;
+    }
+
+    body[data-theme="classic"]{
+      --bg:#0b1020;
+      --surface:#101a33;
+      --surface2:#0e1730;
+      --text:#e7f0ff;
+      --muted:#9fb7ff;
+      --border:#2a3b74;
+      --accent:#63ffb8;
+      --accent2:#63ffb8;
+
+      --shadow: 0 18px 0 rgba(0,0,0,.35), 0 0 0 6px rgba(0,0,0,.35), 0 0 40px rgba(0,0,0,.10);
+      --shadow2: 8px 8px 0 rgba(0,0,0,.35);
+
+      --radius: 0px;
+      --radius2: 0px;
+
+      --scanOpacity: .35;
+      --glowA: rgba(99,255,184,.10);
+      --glowB: rgba(159,183,255,.08);
+
+      --frameBorderWidth: 6px;
+      --panelBorderWidth: 4px;
+
+      --useRetroFont: 1;
+      --useRetroShadows: 1;
+      --usePixelCorners: 1;
+    }
+
+    body[data-theme="gameboy"]{
+      --bg:#0b1a10;
+      --surface:#0f2416;
+      --surface2:#0d1f14;
+      --text:#e8ffd8;
+      --muted:#b7e6a0;
+      --border:#2c6b3a;
+      --accent:#7cff6b;
+      --accent2:#b7e6a0;
+
+      --shadow: 0 18px 0 rgba(0,0,0,.35), 0 0 0 6px rgba(0,0,0,.35), 0 0 40px rgba(0,0,0,.10);
+      --shadow2: 8px 8px 0 rgba(0,0,0,.35);
+
+      --radius: 18px;
+      --radius2: 12px;
+
+      --scanOpacity: .25;
+      --glowA: rgba(124,255,107,.12);
+      --glowB: rgba(183,230,160,.08);
+
+      --frameBorderWidth: 6px;
+      --panelBorderWidth: 4px;
+
+      --useRetroFont: 1;
+      --useRetroShadows: 1;
+      --usePixelCorners: 0;
+    }
+
+    body[data-theme="dos"]{
+      --bg:#05070c;
+      --surface:#05070c;
+      --surface2:#05070c;
+      --text:#c9f6ff;
+      --muted:#72d6ea;
+      --border:#00a9b2;
+      --accent:#00f5ff;
+      --accent2:#00f5ff;
+
+      --shadow: 0 18px 0 rgba(0,0,0,.35), 0 0 0 6px rgba(0,0,0,.35), 0 0 40px rgba(0,0,0,.10);
+      --shadow2: 8px 8px 0 rgba(0,0,0,.35);
+
+      --radius: 0px;
+      --radius2: 0px;
+
+      --scanOpacity: .40;
+      --glowA: rgba(0,245,255,.08);
+      --glowB: rgba(0,245,255,.05);
+
+      --frameBorderWidth: 6px;
+      --panelBorderWidth: 4px;
+
+      --useRetroFont: 1;
+      --useRetroShadows: 1;
+      --usePixelCorners: 0;
+    }
+
+    body[data-theme="arcade"]{
+      --bg:#070818;
+      --surface:#0d0f2c;
+      --surface2:#090a22;
+      --text:#f2f0ff;
+      --muted:#bdb7ff;
+      --border:#3a2cff;
+      --accent:#23f7d2;
+      --accent2:#ff4d8d;
+
+      --shadow: 0 18px 0 rgba(0,0,0,.35), 0 0 0 6px rgba(0,0,0,.35), 0 0 40px rgba(0,0,0,.10);
+      --shadow2: 8px 8px 0 rgba(0,0,0,.35);
+
+      --radius: 0px;
+      --radius2: 0px;
+
+      --scanOpacity: .35;
+      --glowA: rgba(58,44,255,.22);
+      --glowB: rgba(35,247,210,.12);
+
+      --frameBorderWidth: 6px;
+      --panelBorderWidth: 4px;
+
+      --useRetroFont: 1;
+      --useRetroShadows: 1;
+      --usePixelCorners: 1;
+    }
+
+    /* ======================================================
+       BASE STYLES
+    =======================================================*/
     *{box-sizing:border-box}
     html,body{height:100%}
 
@@ -29,22 +175,54 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at 20% 15%, rgba(37,99,235,.10) 0%, transparent 35%),
-        radial-gradient(circle at 80% 25%, rgba(14,165,233,.08) 0%, transparent 40%),
+        radial-gradient(circle at 20% 15%, var(--glowA) 0%, transparent 35%),
+        radial-gradient(circle at 80% 25%, var(--glowB) 0%, transparent 40%),
         linear-gradient(180deg, #ffffff 0%, var(--bg) 60%, #eef2f7 100%);
       display:grid;
       place-items:center;
       padding:24px;
     }
 
+    /* Scanlines only when retro */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.03) 0px,
+          rgba(255,255,255,0.03) 1px,
+          rgba(0,0,0,0.06) 2px,
+          rgba(0,0,0,0.06) 3px
+        );
+      opacity:var(--scanOpacity);
+      mix-blend-mode:overlay;
+    }
+
     .card{
       width:min(980px, 100%);
       background:var(--surface);
-      border:1px solid var(--border);
+      border:var(--frameBorderWidth) solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding:24px;
+      position:relative;
     }
+
+    /* Pixel corners (only for themes that want it) */
+    .corner{
+      position:absolute;
+      width:14px; height:14px;
+      background:var(--accent);
+      opacity: calc(var(--usePixelCorners) * .9);
+      pointer-events:none;
+    }
+    .c1{top:-7px; left:-7px}
+    .c2{top:-7px; right:-7px}
+    .c3{bottom:-7px; left:-7px}
+    .c4{bottom:-7px; right:-7px}
 
     header{
       display:flex;
@@ -53,8 +231,15 @@
       align-items:flex-start;
       justify-content:space-between;
       padding-bottom:18px;
-      border-bottom:1px solid var(--border);
+      border-bottom:1px solid rgba(0,0,0,.0);
       margin-bottom:18px;
+    }
+    /* For modern it looks clean; for retro we add a border line */
+    body[data-theme="classic"] header,
+    body[data-theme="gameboy"] header,
+    body[data-theme="dos"] header,
+    body[data-theme="arcade"] header{
+      border-bottom:var(--panelBorderWidth) solid var(--border);
     }
 
     .identity h1{
@@ -73,11 +258,11 @@
 
     .status{
       background:var(--surface2);
-      border:1px solid var(--border);
+      border:var(--panelBorderWidth) solid var(--border);
       border-radius: var(--radius2);
       padding:12px 14px;
       min-width: 240px;
-      box-shadow: var(--shadow2);
+      box-shadow: calc(var(--useRetroShadows) * 1px) * 0 0 0 rgba(0,0,0,0); /* no-op */
     }
 
     .status .label{
@@ -95,14 +280,6 @@
       gap:10px;
     }
 
-    .dot{
-      width:10px;height:10px;
-      border-radius:50%;
-      background:#22c55e;
-      box-shadow: 0 0 0 3px rgba(34,197,94,.15);
-      flex:0 0 auto;
-    }
-
     .grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -114,17 +291,26 @@
     }
 
     section{
-      border:1px solid var(--border);
+      border:var(--panelBorderWidth) solid var(--border);
       border-radius: var(--radius2);
       background:var(--surface);
       box-shadow: var(--shadow2);
       padding:18px;
     }
 
+    /* Retro panels get chunky shadow */
+    body[data-theme="classic"] section,
+    body[data-theme="gameboy"] section,
+    body[data-theme="dos"] section,
+    body[data-theme="arcade"] section{
+      box-shadow: 8px 8px 0 rgba(0,0,0,.35);
+    }
+
     section h2{
       margin:0 0 12px 0;
       font-size:14px;
       letter-spacing:.2px;
+      color:var(--text);
     }
 
     .bio{
@@ -161,16 +347,39 @@
       transition: transform .08s ease, box-shadow .08s ease, border-color .08s ease;
     }
 
-    .btn:hover, .btn:focus{
-      outline:none;
+    .btn:hover{
       transform: translateY(-1px);
       box-shadow: 0 10px 20px rgba(2,6,23,.08);
       border-color: rgba(37,99,235,.35);
     }
 
+    .btn:focus, .link:focus, .themeToggle:focus, select:focus, button:focus{
+      outline: 3px solid rgba(37,99,235,.30);
+      outline-offset: 2px;
+    }
+
     .btn.primary{
       background: linear-gradient(180deg, rgba(37,99,235,.10), rgba(37,99,235,.04));
       border-color: rgba(37,99,235,.35);
+    }
+
+    /* Retro buttons look consistent */
+    body[data-theme="classic"] .btn,
+    body[data-theme="gameboy"] .btn,
+    body[data-theme="dos"] .btn,
+    body[data-theme="arcade"] .btn{
+      border-radius: 0px;
+      border:3px solid var(--border);
+      background: rgba(0,0,0,.18);
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+      font-weight: 400;
+    }
+    body[data-theme="classic"] .btn.primary,
+    body[data-theme="gameboy"] .btn.primary,
+    body[data-theme="dos"] .btn.primary,
+    body[data-theme="arcade"] .btn.primary{
+      background: rgba(0,0,0,.22);
+      border-color: var(--border);
     }
 
     .links{
@@ -194,8 +403,7 @@
       transition: transform .08s ease, box-shadow .08s ease, border-color .08s ease;
     }
 
-    .link:hover, .link:focus{
-      outline:none;
+    .link:hover{
       transform: translateY(-1px);
       box-shadow: 0 10px 20px rgba(2,6,23,.08);
       border-color: rgba(14,165,233,.35);
@@ -205,6 +413,17 @@
       color:var(--muted);
       font-size:12px;
       white-space:nowrap;
+    }
+
+    /* Retro links */
+    body[data-theme="classic"] .link,
+    body[data-theme="gameboy"] .link,
+    body[data-theme="dos"] .link,
+    body[data-theme="arcade"] .link{
+      border-radius: 0px;
+      border:3px solid var(--border);
+      background: rgba(0,0,0,.18);
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
     }
 
     footer{
@@ -218,6 +437,7 @@
       justify-content:space-between;
       color:var(--muted);
       font-size:12px;
+      position:relative;
     }
 
     .kbd{
@@ -232,25 +452,125 @@
       align-items:center;
       gap:6px;
     }
+
+    /* Footer theme control (hidden until clicked) */
+    .themeArea{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
+    .themeToggle{
+      background:transparent;
+      border:none;
+      color:var(--muted);
+      padding:6px 8px;
+      cursor:pointer;
+      font:inherit;
+      text-decoration:underline;
+      border-radius:8px;
+    }
+    .themeToggle:hover{color:var(--text)}
+
+    .themePicker{
+      display:none;
+      align-items:center;
+      gap:8px;
+    }
+
+    .themePicker select{
+      font:inherit;
+      color:var(--text);
+      background:var(--surface2);
+      border:1px solid var(--border);
+      padding:8px 10px;
+      border-radius: 10px;
+      cursor:pointer;
+    }
+
+    .themePicker .tiny{
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    /* Retro font on demand */
+    body[data-theme="classic"],
+    body[data-theme="gameboy"],
+    body[data-theme="dos"],
+    body[data-theme="arcade"]{
+      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    /* Retro text sizing tweak for readability */
+    body[data-theme="classic"] .identity h1,
+    body[data-theme="gameboy"] .identity h1,
+    body[data-theme="dos"] .identity h1,
+    body[data-theme="arcade"] .identity h1{
+      font-size:20px;
+      line-height:1.4;
+    }
+    body[data-theme="classic"] .bio,
+    body[data-theme="gameboy"] .bio,
+    body[data-theme="dos"] .bio,
+    body[data-theme="arcade"] .bio{
+      font-size:12px;
+    }
+    body[data-theme="classic"] .link,
+    body[data-theme="gameboy"] .link,
+    body[data-theme="dos"] .link,
+    body[data-theme="arcade"] .link{
+      font-size:12px;
+    }
+    body[data-theme="classic"] .link .hint,
+    body[data-theme="gameboy"] .link .hint,
+    body[data-theme="dos"] .link .hint,
+    body[data-theme="arcade"] .link .hint{
+      font-size:10px;
+    }
+
+    /* Corner + retro shadow on status box */
+    body[data-theme="classic"] .status,
+    body[data-theme="gameboy"] .status,
+    body[data-theme="dos"] .status,
+    body[data-theme="arcade"] .status{
+      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
+      background: rgba(0,0,0,.18);
+    }
+
+    /* Pixel corners only for classic + arcade */
+    body[data-theme="classic"] .corner,
+    body[data-theme="arcade"] .corner{
+      opacity: .9;
+    }
+    body[data-theme="modern"] .corner,
+    body[data-theme="gameboy"] .corner,
+    body[data-theme="dos"] .corner{
+      opacity: 0;
+    }
   </style>
 </head>
 
 <body>
   <main class="card" role="main" aria-label="Jeremy Hart link card">
+    <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+
     <header>
       <div class="identity">
         <h1>Jeremy Hart</h1>
         <div class="metaLine">Gilford, NH</div>
       </div>
 
-      <div class="status" aria-label="Status">
-        <div class="label">Status</div>
-        <div class="value"><span class="dot" aria-hidden="true"></span> Online</div>
+      <div class="status" aria-label="Preferred contact">
+        <div class="label">Preferred contact</div>
+        <div class="value">Email is best</div>
       </div>
     </header>
 
     <div class="grid">
-      <section aria-label="Contact">
+      <section id="contact" aria-label="Contact">
         <h2>Contact</h2>
         <p class="bio">Ops Director in Gilford, NH. Fitness, technology, and theatre nerd. This is my link card for contact, socials, and whatever I’m building.</p>
 
@@ -258,7 +578,7 @@
           <a class="btn primary" href="tel:+19046080347">Call</a>
           <a class="btn primary" href="sms:+19046080347">Text</a>
           <a class="btn" href="mailto:jeremy.allan.hart@gmail.com">Email</a>
-          <a class="btn" href="jeremy-hart.vcf">Add contact</a>
+          <a class="btn" href="jeremy-hart.vcf" download>Add contact</a>
         </div>
       </section>
 
@@ -269,23 +589,29 @@
           <a class="link" href="https://www.linkedin.com/in/jeremyallanhart/" target="_blank" rel="noopener">
             <span>LinkedIn</span><span class="hint">Professional</span>
           </a>
+
           <a class="link" href="https://jeremyallanhart.substack.com/" target="_blank" rel="noopener">
             <span>Substack</span><span class="hint">Writing</span>
           </a>
-          <a class="link" href="https://x.com/jeremyhart" target="_blank" rel="noopener">
-            <span>X</span><span class="hint">Social</span>
-          </a>
-          <a class="link" href="https://www.instagram.com/jeremyallanhart/" target="_blank" rel="noopener">
-            <span>Instagram</span><span class="hint">Social</span>
-          </a>
-          <a class="link" href="https://www.facebook.com/hart.jeremy" target="_blank" rel="noopener">
-            <span>Facebook</span><span class="hint">Social</span>
-          </a>
+
           <a class="link" href="https://www.strava.com/athletes/18895402" target="_blank" rel="noopener">
             <span>Strava</span><span class="hint">Fitness</span>
           </a>
+
           <a class="link" href="https://www.goodreads.com/user/show/12091117-jeremy-hart" target="_blank" rel="noopener">
             <span>Goodreads</span><span class="hint">Reading</span>
+          </a>
+
+          <a class="link" href="https://x.com/jeremyhart" target="_blank" rel="noopener">
+            <span>X</span><span class="hint">Social</span>
+          </a>
+
+          <a class="link" href="https://www.instagram.com/jeremyallanhart/" target="_blank" rel="noopener">
+            <span>Instagram</span><span class="hint">Social</span>
+          </a>
+
+          <a class="link" href="https://www.facebook.com/hart.jeremy" target="_blank" rel="noopener">
+            <span>Facebook</span><span class="hint">Social</span>
           </a>
         </div>
       </section>
@@ -293,25 +619,82 @@
 
     <footer>
       <div>© <span id="year"></span> Jeremy Hart</div>
-      <div class="kbd" title="Keyboard shortcut">Press <strong>Enter</strong> to jump to Contact</div>
+
+      <div class="themeArea">
+        <div class="kbd" title="Keyboard shortcut">Press <strong>Enter</strong> to jump to Contact</div>
+        <button class="themeToggle" id="themeToggle" type="button" aria-expanded="false" aria-controls="themePicker">Themes</button>
+
+        <div class="themePicker" id="themePicker" aria-label="Theme picker">
+          <select id="themeSelect" aria-label="Select theme">
+            <option value="modern">Modern</option>
+            <option value="classic">Classic</option>
+            <option value="gameboy">Game Boy</option>
+            <option value="dos">DOS</option>
+            <option value="arcade">Arcade</option>
+          </select>
+          <span class="tiny">Tip: add <code>?theme=dos</code> to the URL</span>
+        </div>
+      </div>
     </footer>
   </main>
 
   <script>
+    // Year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Press Enter to focus the first primary action (Call)
+    const THEMES = ["modern","classic","gameboy","dos","arcade"];
+    const themeToggleBtn = document.getElementById("themeToggle");
+    const themePicker = document.getElementById("themePicker");
+    const themeSelect = document.getElementById("themeSelect");
+
+    function applyTheme(theme){
+      document.body.setAttribute("data-theme", theme);
+    }
+
+    function getUrlTheme(){
+      const raw = new URLSearchParams(window.location.search).get("theme");
+      const t = (raw || "").toLowerCase();
+      return THEMES.includes(t) ? t : null;
+    }
+
+    // Priority:
+    // 1) URL param ?theme=...
+    // 2) saved preference
+    // 3) modern default
+    const urlTheme = getUrlTheme();
+    const saved = localStorage.getItem("jh_theme");
+    const initial = urlTheme || (THEMES.includes(saved) ? saved : "modern");
+
+    applyTheme(initial);
+    themeSelect.value = initial;
+
+    // Footer: toggle show/hide
+    themeToggleBtn.addEventListener("click", () => {
+      const isOpen = themePicker.style.display === "inline-flex";
+      themePicker.style.display = isOpen ? "none" : "inline-flex";
+      themeToggleBtn.setAttribute("aria-expanded", String(!isOpen));
+      if (!isOpen) themeSelect.focus();
+    });
+
+    // Selecting a theme saves preference (does not rewrite URL)
+    themeSelect.addEventListener("change", () => {
+      const val = themeSelect.value;
+      applyTheme(val);
+      localStorage.setItem("jh_theme", val);
+    });
+
+    // Press Enter to jump to Contact and focus first action
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Enter") return;
 
       const tag = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toLowerCase() : "";
       if (tag === "select" || tag === "button" || tag === "input" || tag === "textarea") return;
 
-      const firstAction = document.querySelector(".actions a");
-      if (firstAction) {
-        firstAction.scrollIntoView({ behavior: "smooth", block: "center" });
-        firstAction.focus({ preventScroll: true });
-      }
+      const contact = document.getElementById("contact");
+      const firstAction = document.querySelector("#contact .actions a");
+
+      if (contact) contact.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (firstAction) firstAction.focus({ preventScroll: true });
     });
   </script>
 </body>
