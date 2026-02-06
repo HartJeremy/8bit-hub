@@ -11,14 +11,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <style>
-    /* ======================================================
-       THEME SYSTEM
-       Work-safe by default (modern).
-       Retro themes are available via hidden footer control
-       and via URL: ?theme=modern|classic|gameboy|dos|arcade
-    =======================================================*/
+    /* =========================
+       THEMES
+       Default: modern, minimal.
+       Retro themes exist but are hidden behind footer "Themes"
+       URL param supported: ?theme=modern|classic|gameboy|dos|arcade
+    ==========================*/
 
-    /* Default variables = modern */
     body{
       --bg:#f4f6f8;
       --surface:#ffffff;
@@ -34,22 +33,21 @@
       --radius2: 12px;
 
       --scanOpacity: 0;
-      --glowA: rgba(0,0,0,0);
-      --glowB: rgba(0,0,0,0);
+      --glowA: rgba(37,99,235,.10);
+      --glowB: rgba(14,165,233,.08);
 
       --frameBorderWidth: 1px;
       --panelBorderWidth: 1px;
 
-      --useRetroFont: 0;
-      --useRetroShadows: 0;
       --usePixelCorners: 0;
     }
 
     body[data-theme="modern"]{
-      --useRetroFont: 0;
-      --useRetroShadows: 0;
-      --usePixelCorners: 0;
       --scanOpacity: 0;
+      --usePixelCorners: 0;
+      --glowA: rgba(37,99,235,.10);
+      --glowB: rgba(14,165,233,.08);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
     }
 
     body[data-theme="classic"]{
@@ -75,9 +73,9 @@
       --frameBorderWidth: 6px;
       --panelBorderWidth: 4px;
 
-      --useRetroFont: 1;
-      --useRetroShadows: 1;
       --usePixelCorners: 1;
+
+      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
     body[data-theme="gameboy"]{
@@ -103,9 +101,9 @@
       --frameBorderWidth: 6px;
       --panelBorderWidth: 4px;
 
-      --useRetroFont: 1;
-      --useRetroShadows: 1;
       --usePixelCorners: 0;
+
+      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
     body[data-theme="dos"]{
@@ -131,9 +129,9 @@
       --frameBorderWidth: 6px;
       --panelBorderWidth: 4px;
 
-      --useRetroFont: 1;
-      --useRetroShadows: 1;
       --usePixelCorners: 0;
+
+      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
     body[data-theme="arcade"]{
@@ -159,20 +157,19 @@
       --frameBorderWidth: 6px;
       --panelBorderWidth: 4px;
 
-      --useRetroFont: 1;
-      --useRetroShadows: 1;
       --usePixelCorners: 1;
+
+      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
-    /* ======================================================
-       BASE STYLES
-    =======================================================*/
+    /* =========================
+       BASE LAYOUT
+    ==========================*/
     *{box-sizing:border-box}
     html,body{height:100%}
 
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
       color:var(--text);
       background:
         radial-gradient(circle at 20% 15%, var(--glowA) 0%, transparent 35%),
@@ -183,7 +180,6 @@
       padding:24px;
     }
 
-    /* Scanlines only when retro */
     body::before{
       content:"";
       position:fixed;
@@ -202,7 +198,7 @@
     }
 
     .card{
-      width:min(980px, 100%);
+      width:min(900px, 100%);
       background:var(--surface);
       border:var(--frameBorderWidth) solid var(--border);
       border-radius: var(--radius);
@@ -211,7 +207,6 @@
       position:relative;
     }
 
-    /* Pixel corners (only for themes that want it) */
     .corner{
       position:absolute;
       width:14px; height:14px;
@@ -231,15 +226,8 @@
       align-items:flex-start;
       justify-content:space-between;
       padding-bottom:18px;
-      border-bottom:1px solid rgba(0,0,0,.0);
       margin-bottom:18px;
-    }
-    /* For modern it looks clean; for retro we add a border line */
-    body[data-theme="classic"] header,
-    body[data-theme="gameboy"] header,
-    body[data-theme="dos"] header,
-    body[data-theme="arcade"] header{
-      border-bottom:var(--panelBorderWidth) solid var(--border);
+      border-bottom:1px solid var(--border);
     }
 
     .identity h1{
@@ -256,22 +244,20 @@
       line-height:1.6;
     }
 
-    .status{
+    .infoBox{
       background:var(--surface2);
       border:var(--panelBorderWidth) solid var(--border);
       border-radius: var(--radius2);
       padding:12px 14px;
-      min-width: 240px;
-      box-shadow: calc(var(--useRetroShadows) * 1px) * 0 0 0 rgba(0,0,0,0); /* no-op */
+      min-width: 260px;
+      box-shadow: var(--shadow2);
     }
-
-    .status .label{
+    .infoBox .label{
       font-size:12px;
       color:var(--muted);
       letter-spacing:.2px;
     }
-
-    .status .value{
+    .infoBox .value{
       margin-top:6px;
       font-size:14px;
       color:var(--text);
@@ -287,7 +273,7 @@
     }
     @media (max-width: 900px){
       .grid{grid-template-columns:1fr}
-      .status{min-width: unset; width: 100%;}
+      .infoBox{min-width: unset; width: 100%;}
     }
 
     section{
@@ -298,7 +284,6 @@
       padding:18px;
     }
 
-    /* Retro panels get chunky shadow */
     body[data-theme="classic"] section,
     body[data-theme="gameboy"] section,
     body[data-theme="dos"] section,
@@ -310,7 +295,6 @@
       margin:0 0 12px 0;
       font-size:14px;
       letter-spacing:.2px;
-      color:var(--text);
     }
 
     .bio{
@@ -334,7 +318,6 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
       padding:12px 12px;
       border-radius: 12px;
       border:1px solid var(--border);
@@ -363,7 +346,7 @@
       border-color: rgba(37,99,235,.35);
     }
 
-    /* Retro buttons look consistent */
+    /* Retro buttons */
     body[data-theme="classic"] .btn,
     body[data-theme="gameboy"] .btn,
     body[data-theme="dos"] .btn,
@@ -437,7 +420,6 @@
       justify-content:space-between;
       color:var(--muted);
       font-size:12px;
-      position:relative;
     }
 
     .kbd{
@@ -453,7 +435,6 @@
       gap:6px;
     }
 
-    /* Footer theme control (hidden until clicked) */
     .themeArea{
       display:flex;
       align-items:center;
@@ -496,15 +477,7 @@
       white-space:nowrap;
     }
 
-    /* Retro font on demand */
-    body[data-theme="classic"],
-    body[data-theme="gameboy"],
-    body[data-theme="dos"],
-    body[data-theme="arcade"]{
-      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-
-    /* Retro text sizing tweak for readability */
+    /* Retro readability */
     body[data-theme="classic"] .identity h1,
     body[data-theme="gameboy"] .identity h1,
     body[data-theme="dos"] .identity h1,
@@ -531,25 +504,12 @@
       font-size:10px;
     }
 
-    /* Corner + retro shadow on status box */
-    body[data-theme="classic"] .status,
-    body[data-theme="gameboy"] .status,
-    body[data-theme="dos"] .status,
-    body[data-theme="arcade"] .status{
-      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
-      background: rgba(0,0,0,.18);
-    }
-
     /* Pixel corners only for classic + arcade */
     body[data-theme="classic"] .corner,
-    body[data-theme="arcade"] .corner{
-      opacity: .9;
-    }
+    body[data-theme="arcade"] .corner{opacity:.9}
     body[data-theme="modern"] .corner,
     body[data-theme="gameboy"] .corner,
-    body[data-theme="dos"] .corner{
-      opacity: 0;
-    }
+    body[data-theme="dos"] .corner{opacity:0}
   </style>
 </head>
 
@@ -563,16 +523,16 @@
         <div class="metaLine">Gilford, NH</div>
       </div>
 
-      <div class="status" aria-label="Preferred contact">
-        <div class="label">Preferred contact</div>
-        <div class="value">Email is best</div>
+      <div class="infoBox" aria-label="Info panel">
+        <div class="label" id="infoLabel">About</div>
+        <div class="value" id="infoValue">Fitness • Technology • Theatre</div>
       </div>
     </header>
 
     <div class="grid">
       <section id="contact" aria-label="Contact">
         <h2>Contact</h2>
-        <p class="bio">Ops Director in Gilford, NH. Fitness, technology, and theatre nerd. This is my link card for contact, socials, and whatever I’m building.</p>
+        <p class="bio">Fitness, technology, and theatre nerd. This is my link card for contact, socials, and whatever I’m building.</p>
 
         <div class="actions" aria-label="Primary contact actions">
           <a class="btn primary" href="tel:+19046080347">Call</a>
@@ -589,27 +549,21 @@
           <a class="link" href="https://www.linkedin.com/in/jeremyallanhart/" target="_blank" rel="noopener">
             <span>LinkedIn</span><span class="hint">Professional</span>
           </a>
-
           <a class="link" href="https://jeremyallanhart.substack.com/" target="_blank" rel="noopener">
             <span>Substack</span><span class="hint">Writing</span>
           </a>
-
           <a class="link" href="https://www.strava.com/athletes/18895402" target="_blank" rel="noopener">
             <span>Strava</span><span class="hint">Fitness</span>
           </a>
-
           <a class="link" href="https://www.goodreads.com/user/show/12091117-jeremy-hart" target="_blank" rel="noopener">
             <span>Goodreads</span><span class="hint">Reading</span>
           </a>
-
           <a class="link" href="https://x.com/jeremyhart" target="_blank" rel="noopener">
             <span>X</span><span class="hint">Social</span>
           </a>
-
           <a class="link" href="https://www.instagram.com/jeremyallanhart/" target="_blank" rel="noopener">
             <span>Instagram</span><span class="hint">Social</span>
           </a>
-
           <a class="link" href="https://www.facebook.com/hart.jeremy" target="_blank" rel="noopener">
             <span>Facebook</span><span class="hint">Social</span>
           </a>
@@ -639,10 +593,11 @@
   </main>
 
   <script>
-    // Year
     document.getElementById("year").textContent = new Date().getFullYear();
 
     const THEMES = ["modern","classic","gameboy","dos","arcade"];
+    const RETRO = ["classic","gameboy","dos","arcade"];
+
     const themeToggleBtn = document.getElementById("themeToggle");
     const themePicker = document.getElementById("themePicker");
     const themeSelect = document.getElementById("themeSelect");
@@ -657,18 +612,30 @@
       return THEMES.includes(t) ? t : null;
     }
 
-    // Priority:
-    // 1) URL param ?theme=...
-    // 2) saved preference
-    // 3) modern default
+    function setInfoForTheme(theme){
+      const label = document.getElementById("infoLabel");
+      const value = document.getElementById("infoValue");
+      if (!label || !value) return;
+
+      const isRetro = RETRO.includes(theme);
+
+      if (isRetro){
+        label.textContent = "PRESS START";
+        value.textContent = "ENTER";
+      } else {
+        label.textContent = "About";
+        value.textContent = "Fitness • Technology • Theatre";
+      }
+    }
+
     const urlTheme = getUrlTheme();
     const saved = localStorage.getItem("jh_theme");
     const initial = urlTheme || (THEMES.includes(saved) ? saved : "modern");
 
     applyTheme(initial);
+    setInfoForTheme(initial);
     themeSelect.value = initial;
 
-    // Footer: toggle show/hide
     themeToggleBtn.addEventListener("click", () => {
       const isOpen = themePicker.style.display === "inline-flex";
       themePicker.style.display = isOpen ? "none" : "inline-flex";
@@ -676,14 +643,14 @@
       if (!isOpen) themeSelect.focus();
     });
 
-    // Selecting a theme saves preference (does not rewrite URL)
     themeSelect.addEventListener("change", () => {
       const val = themeSelect.value;
       applyTheme(val);
+      setInfoForTheme(val);
       localStorage.setItem("jh_theme", val);
     });
 
-    // Press Enter to jump to Contact and focus first action
+    // Enter key matches PRESS START in retro themes and is a handy shortcut in modern
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Enter") return;
 
