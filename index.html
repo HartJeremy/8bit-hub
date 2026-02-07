@@ -135,9 +135,32 @@
     }
 
     header{ padding:22px 20px 16px; border-bottom:1px solid var(--border); }
+
+    .headerTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .headText{ min-width:0; }
+
     h1{ margin:0 0 6px; font-size:2rem; }
     .location{ margin:0 0 12px; color:var(--muted); }
     .about{ margin:0; color:var(--muted); }
+
+    .avatar{
+      width:96px;
+      height:96px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.04);
+      object-fit: cover;
+      flex: 0 0 auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,.30);
+    }
+    @media (max-width: 420px){
+      .avatar{ width:74px; height:74px; border-radius:16px; }
+    }
 
     .meta-row{
       display:flex;
@@ -311,10 +334,7 @@
       -webkit-backdrop-filter: blur(10px);
       min-width: 260px;
     }
-    .pay-list{
-      display:grid;
-      gap:10px;
-    }
+    .pay-list{ display:grid; gap:10px; }
     .pay-item{
       display:flex;
       align-items:baseline;
@@ -327,11 +347,7 @@
       text-decoration:none;
     }
     .pay-item:hover{ border-color:rgba(255,255,255,.26); }
-    .pay-left{
-      min-width:0;
-      display:grid;
-      gap:2px;
-    }
+    .pay-left{ min-width:0; display:grid; gap:2px; }
     .pay-title{ font-weight:750; }
     .pay-desc{ color:var(--muted); font-size:.92rem; }
     .pay-tag{
@@ -621,9 +637,15 @@
   <div class="wrap">
     <div class="card">
       <header>
-        <h1 id="name"></h1>
-        <p class="location" id="location"></p>
-        <p class="about" id="about"></p>
+        <div class="headerTop">
+          <div class="headText">
+            <h1 id="name"></h1>
+            <p class="location" id="location"></p>
+            <p class="about" id="about"></p>
+          </div>
+
+          <img id="avatar" class="avatar" alt="" loading="eager" decoding="async" />
+        </div>
 
         <div class="meta-row">
           <button class="toggle" id="aboutToggle" type="button" aria-expanded="false" aria-controls="about-panel">
@@ -718,6 +740,12 @@
       email: "jeremy.allan.hart@gmail.com",
       vcfPath: "jeremy-hart.vcf",
 
+      showAvatar: true,
+      avatar: {
+        src: "assets/avatar.png",
+        alt: "Illustration of Jeremy with his dog"
+      },
+
       showFeatured: false,
       featured: {
         title: "Start here",
@@ -782,6 +810,17 @@
     $("textLink").href = `sms:${SITE.phone}`;
     $("emailLink").href = `mailto:${SITE.email}`;
     $("vcfLink").href = SITE.vcfPath;
+
+    // Avatar (optional)
+    const avatarEl = $("avatar");
+    if (avatarEl){
+      if (SITE.showAvatar && SITE.avatar?.src){
+        avatarEl.src = SITE.avatar.src;
+        avatarEl.alt = SITE.avatar.alt || "";
+      } else {
+        avatarEl.remove();
+      }
+    }
 
     // Featured section (optional)
     const featuredSection = $("featuredSection");
