@@ -3,248 +3,357 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jeremy Hart | Link Card</title>
+  <meta name="color-scheme" content="light dark" />
 
-  <!-- Fonts (used only by specific themes) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <title>Jeremy Hart</title>
+  <meta name="description" content="Personal link page for Jeremy Hart" />
 
   <style>
-    /* ======================================================
-       THEMES
-       Default: modern
-       Optional: arcade (game vibe)
-       Decades: seventies, eighties, nineties
-       URL: ?theme=modern|arcade|seventies|eighties|nineties
+    :root{
+      /* Font stacks (no external downloads) */
+      --font-sans: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      --font-serif: ui-serif, "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New",monospace;
+      --font-rounded: ui-rounded, system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
 
-       Rule: if background goes light/white, text is dark.
-    =======================================================*/
+      --font: var(--font-sans);
 
-    body{
-      /* Modern defaults */
-      --bg:#f4f6f8;
-      --surface:#ffffff;
-      --surface2:#f8fafc;
-      --text:#0f172a;
-      --muted:#475569;
-      --border:#e2e8f0;
-      --accent:#2563eb;
+      --bg:#0b0c10;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.55);
+      --border:rgba(255,255,255,.14);
 
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-      --shadow2: 0 6px 18px rgba(0,0,0,.06);
+      --accent:#7dd3fc;
+      --glow1: rgba(125,211,252,.18);
+      --glow2: rgba(167,139,250,.14);
 
-      --radius: 16px;
-      --radius2: 12px;
-
-      --scanOpacity: 0;
-      --glowA: rgba(37,99,235,.10);
-      --glowB: rgba(14,165,233,.08);
-
-      --frameBorderWidth: 1px;
-      --panelBorderWidth: 1px;
-
-      --usePixelCorners: 0;
-      --useChunkyShadow: 0;
-
-      /* Extra “theme effects” toggles */
-      --gridOpacity: 0;
-      --grainOpacity: 0;
-      --noiseOpacity: 0;
-
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      --shadow:0 18px 60px rgba(0,0,0,.45);
+      --r1:18px;
+      --r2:14px;
+      --max:760px;
     }
 
-    body[data-theme="modern"]{
-      --bg:#f4f6f8;
-      --surface:#ffffff;
-      --surface2:#f8fafc;
-      --text:#0f172a;       /* dark text on light background */
-      --muted:#475569;
-      --border:#e2e8f0;
-      --accent:#2563eb;
-
-      --scanOpacity: 0;
-      --gridOpacity: 0;
-      --grainOpacity: 0;
-      --noiseOpacity: 0;
-
-      --glowA: rgba(37,99,235,.10);
-      --glowB: rgba(14,165,233,.08);
-
-      --usePixelCorners: 0;
-      --useChunkyShadow: 0;
-
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+    /* Themes */
+    [data-theme="modern"]{
+      --font: var(--font-sans);
+      --bg:#0b0c10;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.55);
+      --border:rgba(255,255,255,.14);
+      --accent:#7dd3fc;
+      --glow1: rgba(125,211,252,.18);
+      --glow2: rgba(167,139,250,.14);
+    }
+    [data-theme="arcade"]{
+      --font: var(--font-mono);
+      --bg:#070510;
+      --panel:rgba(255,255,255,.07);
+      --panel2:rgba(255,255,255,.13);
+      --text:rgba(255,255,255,.93);
+      --muted:rgba(255,255,255,.74);
+      --muted2:rgba(255,255,255,.58);
+      --border:rgba(255,255,255,.16);
+      --accent:#a78bfa;
+      --glow1: rgba(167,139,250,.24);
+      --glow2: rgba(34,211,238,.12);
+    }
+    [data-theme="seventies"]{
+      --font: var(--font-serif);
+      --bg:#0e0b06;
+      --panel:rgba(255,255,255,.07);
+      --panel2:rgba(255,255,255,.13);
+      --text:rgba(255,255,255,.93);
+      --muted:rgba(255,255,255,.75);
+      --muted2:rgba(255,255,255,.60);
+      --border:rgba(255,255,255,.16);
+      --accent:#fbbf24;
+      --glow1: rgba(251,191,36,.22);
+      --glow2: rgba(244,114,182,.10);
+    }
+    [data-theme="eighties"]{
+      --font: var(--font-rounded);
+      --bg:#05040a;
+      --panel:rgba(255,255,255,.07);
+      --panel2:rgba(255,255,255,.13);
+      --text:rgba(255,255,255,.93);
+      --muted:rgba(255,255,255,.74);
+      --muted2:rgba(255,255,255,.58);
+      --border:rgba(255,255,255,.16);
+      --accent:#fb7185;
+      --glow1: rgba(251,113,133,.24);
+      --glow2: rgba(34,211,238,.12);
+    }
+    [data-theme="nineties"]{
+      --font: var(--font-sans);
+      --bg:#070a0b;
+      --panel:rgba(255,255,255,.07);
+      --panel2:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.93);
+      --muted:rgba(255,255,255,.74);
+      --muted2:rgba(255,255,255,.58);
+      --border:rgba(255,255,255,.16);
+      --accent:#34d399;
+      --glow1: rgba(52,211,153,.22);
+      --glow2: rgba(125,211,252,.10);
     }
 
-    /* Arcade: one game theme */
-    body[data-theme="arcade"]{
-      --bg:#070818;
-      --surface:#0d0f2c;
-      --surface2:#090a22;
-      --text:#f2f0ff;
-      --muted:#bdb7ff;
-      --border:#3a2cff;
-      --accent:#23f7d2;
+    /* Seasonal + holidays */
+    [data-theme="winter"]{ --font:var(--font-sans); --bg:#070c12; --accent:#7dd3fc; --glow1:rgba(125,211,252,.24); --glow2:rgba(148,163,184,.12); }
+    [data-theme="spring"]{ --font:var(--font-sans); --bg:#06100c; --accent:#34d399; --glow1:rgba(52,211,153,.24); --glow2:rgba(125,211,252,.10); }
+    [data-theme="summer"]{ --font:var(--font-sans); --bg:#041015; --accent:#22d3ee; --glow1:rgba(34,211,238,.24); --glow2:rgba(251,191,36,.10); }
+    [data-theme="fall"]{ --font:var(--font-serif); --bg:#120b06; --accent:#f59e0b; --glow1:rgba(245,158,11,.24); --glow2:rgba(251,113,133,.08); }
+    [data-theme="halloween"]{ --font:var(--font-mono); --bg:#100612; --accent:#fb923c; --glow1:rgba(251,146,60,.26); --glow2:rgba(167,139,250,.14); }
+    [data-theme="holiday"]{ --font:var(--font-sans); --bg:#08100b; --accent:#f87171; --glow1:rgba(248,113,113,.24); --glow2:rgba(52,211,153,.12); }
 
-      --shadow: 0 18px 0 rgba(0,0,0,.35), 0 0 0 6px rgba(0,0,0,.35), 0 0 40px rgba(0,0,0,.10);
-      --shadow2: 8px 8px 0 rgba(0,0,0,.35);
-
-      --radius: 0px;
-      --radius2: 0px;
-
-      --scanOpacity: .33;
-      --gridOpacity: 0;
-      --grainOpacity: 0;
-      --noiseOpacity: .10;
-
-      --glowA: rgba(58,44,255,.22);
-      --glowB: rgba(35,247,210,.12);
-
-      --frameBorderWidth: 6px;
-      --panelBorderWidth: 4px;
-
-      --usePixelCorners: 1;
-      --useChunkyShadow: 1;
-
-      font-family:"Press Start 2P", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-
-    /* 70s: funky typography + warm paper + punchy accents */
-    body[data-theme="seventies"]{
-      --bg:#f7e6c4;
-      --surface:#fff3d6;
-      --surface2:#fbe6bf;
-      --text:#2f1f16;       /* dark readable on light */
-      --muted:#5a3b2c;
-      --border:#d6b47f;
-      --accent:#e05a2b;
-
-      --shadow: 0 14px 30px rgba(55,30,10,.18);
-      --shadow2: 0 10px 20px rgba(55,30,10,.12);
-
-      --radius: 26px;
-      --radius2: 18px;
-
-      --scanOpacity: 0;
-      --gridOpacity: 0;
-      --grainOpacity: .28;  /* paper grain */
-      --noiseOpacity: 0;
-
-      --glowA: rgba(224,90,43,.18);
-      --glowB: rgba(90,59,44,.10);
-
-      --frameBorderWidth: 2px;
-      --panelBorderWidth: 2px;
-
-      --usePixelCorners: 0;
-      --useChunkyShadow: 0;
-
-      font-family: "Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-    }
-
-    /* 80s: neon grid + chrome-ish accents */
-    body[data-theme="eighties"]{
-      --bg:#030414;
-      --surface:#0a0b26;
-      --surface2:#07081f;
-      --text:#f9f4ff;
-      --muted:#e0d2ff;
-      --border:#3cffeb;
-      --accent:#ff4fd8;
-
-      --shadow: 0 22px 50px rgba(0,0,0,.45);
-      --shadow2: 0 16px 34px rgba(0,0,0,.32);
-
-      --radius: 18px;
-      --radius2: 14px;
-
-      --scanOpacity: .08;
-      --gridOpacity: .55;   /* neon grid ON */
-      --grainOpacity: 0;
-      --noiseOpacity: .08;
-
-      --glowA: rgba(255,79,216,.25);
-      --glowB: rgba(60,255,235,.22);
-
-      --frameBorderWidth: 2px;
-      --panelBorderWidth: 1px;
-
-      --usePixelCorners: 0;
-      --useChunkyShadow: 0;
-
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-    }
-
-    /* 90s: beveled buttons + “web 1.0” UI */
-    body[data-theme="nineties"]{
-      --bg:#cfd7e6;
-      --surface:#e8edf6;
-      --surface2:#dfe6f3;
-      --text:#0b1833;       /* dark readable on light */
-      --muted:#2a4a78;
-      --border:#7a8fb5;
-      --accent:#0a58ff;
-
-      --shadow: 0 8px 0 rgba(0,0,0,.18), 0 16px 30px rgba(0,0,0,.12);
-      --shadow2: 0 5px 0 rgba(0,0,0,.15), 0 10px 18px rgba(0,0,0,.10);
-
-      --radius: 10px;
-      --radius2: 10px;
-
-      --scanOpacity: 0;
-      --gridOpacity: 0;
-      --grainOpacity: 0;
-      --noiseOpacity: 0;
-
-      --glowA: rgba(10,88,255,.10);
-      --glowB: rgba(122,143,181,.12);
-
-      --frameBorderWidth: 2px;
-      --panelBorderWidth: 2px;
-
-      --usePixelCorners: 0;
-      --useChunkyShadow: 0;
-
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-
-    /* ======================================================
-       BASE LAYOUT
-    =======================================================*/
-    *{box-sizing:border-box}
-    html,body{height:100%}
-
+    *{ box-sizing:border-box; }
     body{
       margin:0;
+      font-family:var(--font);
       color:var(--text);
       background:
-        radial-gradient(circle at 18% 12%, var(--glowA) 0%, transparent 38%),
-        radial-gradient(circle at 82% 18%, var(--glowB) 0%, transparent 42%),
-        linear-gradient(180deg, #ffffff 0%, var(--bg) 60%, #eef2f7 100%);
+        radial-gradient(1200px 700px at 20% -10%, var(--glow1), transparent 55%),
+        radial-gradient(900px 600px at 110% 10%, var(--glow2), transparent 55%),
+        var(--bg);
+      line-height:1.35;
+    }
+    a{ color:inherit; }
+    a:focus-visible{ outline:3px solid var(--accent); outline-offset:4px; border-radius:12px; }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:28px 16px 48px; }
+    .card{
+      border:1px solid var(--border);
+      border-radius:var(--r1);
+      background:linear-gradient(180deg, var(--panel2), var(--panel));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    header{ padding:22px 20px 16px; border-bottom:1px solid var(--border); }
+    h1{ margin:0 0 6px; font-size:2rem; }
+    .location{ margin:0 0 12px; color:var(--muted); }
+    .about{ margin:0; color:var(--muted); }
+
+    .meta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-top:12px;
+    }
+
+    .toggle{
+      appearance:none;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:650;
+      min-height:40px;
+      font-family:var(--font);
+    }
+
+    /* About: expandable */
+    .about-panel{
+      margin-top:12px;
+      padding:14px 14px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:rgba(0,0,0,.18);
+    }
+    .about-panel .lead{
+      margin:0 0 10px;
+      color:var(--text);
+      font-weight:750;
+    }
+    .about-panel p{
+      margin:10px 0 0;
+      color:var(--muted);
+    }
+    .about-panel p:first-of-type{ margin-top:0; }
+
+    .content{ padding:18px 20px 20px; display:grid; gap:18px; }
+    .section h2{ margin:0 0 10px; font-size:1.12rem; }
+    .section p{ margin:0 0 12px; color:var(--muted); }
+
+    .featured{
+      display:block;
+      padding:14px 14px;
+      border-radius:var(--r2);
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.06);
+      text-decoration:none;
+    }
+    .featured strong{ display:block; font-size:1.06rem; }
+    .featured span{ display:block; margin-top:6px; color:var(--muted); }
+    .featured:hover{ border-color:var(--accent); }
+
+    .pillrow{ display:flex; flex-wrap:wrap; gap:10px; }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      text-decoration:none;
+      min-height:44px;
+      font-weight:650;
+      white-space:nowrap;
+    }
+    .pill:hover{ border-color:rgba(255,255,255,.26); }
+    .pill small{ margin-left:6px; color:var(--muted2); font-weight:600; }
+
+    .grid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px; }
+    @media (max-width:640px){ .grid{ grid-template-columns:1fr; } }
+
+    .link{
+      display:block;
+      padding:14px 14px;
+      border-radius:var(--r2);
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      text-decoration:none;
+      transition:transform .06s ease;
+      min-height:44px;
+    }
+    .link:hover{ border-color:rgba(255,255,255,.26); transform:translateY(-1px); }
+    .top{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+    .tag{
+      font-size:.86rem;
+      color:var(--muted2);
+      border:1px solid rgba(255,255,255,.14);
+      padding:4px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    .desc{ margin-top:6px; color:var(--muted); }
+
+    footer{
+      padding:14px 20px;
+      border-top:1px solid var(--border);
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      color:var(--muted2);
+      font-size:.92rem;
+    }
+    .kbdhint kbd{
+      font-family:var(--font-mono);
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      padding:2px 8px;
+      border-radius:8px;
+      color:var(--text);
+      font-size:.88rem;
+    }
+
+    /* Theme toggle (hidden panel) */
+    .theme-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .theme-panel{
+      margin-top:10px;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:rgba(0,0,0,.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .theme-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .theme-row + .theme-row{
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .themebtn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:650;
+      min-height:40px;
+      font-family:var(--font);
+    }
+    .themebtn[aria-pressed="true"]{ border-color:var(--accent); }
+
+    /* Payments panel */
+    .pay-panel{
+      margin-top:10px;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:rgba(0,0,0,.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      min-width: 260px;
+    }
+    .pay-list{
       display:grid;
-      place-items:center;
-      padding:24px;
+      gap:10px;
+    }
+    .pay-item{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.05);
+      text-decoration:none;
+    }
+    .pay-item:hover{ border-color:rgba(255,255,255,.26); }
+    .pay-left{
+      min-width:0;
+      display:grid;
+      gap:2px;
+    }
+    .pay-title{ font-weight:750; }
+    .pay-desc{ color:var(--muted); font-size:.92rem; }
+    .pay-tag{
+      color:var(--muted2);
+      border:1px solid rgba(255,255,255,.14);
+      padding:4px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+      font-size:.86rem;
     }
 
-    /* Neon grid overlay (80s theme) */
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:var(--gridOpacity);
-      background:
-        linear-gradient(to bottom, rgba(255,79,216,.0) 0%, rgba(255,79,216,.0) 60%, rgba(255,79,216,.25) 100%),
-        repeating-linear-gradient(to right, rgba(60,255,235,.18) 0px, rgba(60,255,235,.18) 1px, rgba(0,0,0,0) 60px),
-        repeating-linear-gradient(to bottom, rgba(60,255,235,.12) 0px, rgba(60,255,235,.12) 1px, rgba(0,0,0,0) 60px);
-      mix-blend-mode: screen;
-      filter: blur(.1px);
+    @media (max-width: 640px){
+      footer{ align-items:flex-start; }
+      .theme-wrap{ width:100%; justify-content:flex-start; }
+      .theme-panel{ width:100%; }
+      .pay-panel{ width:100%; min-width:unset; }
     }
 
-    /* Scanlines/noise overlay (Arcade/80s) */
-    body::before{
+    /* ===========================
+       ARCADE UPGRADE
+       ===========================*/
+    body[data-theme="arcade"]::before{
       content:"";
       position:fixed;
       inset:0;
@@ -252,696 +361,657 @@
       background:
         repeating-linear-gradient(
           to bottom,
-          rgba(255,255,255,0.03) 0px,
-          rgba(255,255,255,0.03) 1px,
-          rgba(0,0,0,0.06) 2px,
-          rgba(0,0,0,0.06) 3px
+          rgba(255,255,255,0.06) 0px,
+          rgba(255,255,255,0.06) 1px,
+          rgba(0,0,0,0.12) 2px,
+          rgba(0,0,0,0.12) 4px
         ),
-        radial-gradient(circle at 30% 40%, rgba(255,255,255,.04) 0%, rgba(0,0,0,0) 45%),
-        radial-gradient(circle at 70% 60%, rgba(255,255,255,.03) 0%, rgba(0,0,0,0) 45%);
-      opacity:var(--scanOpacity);
-      mix-blend-mode:overlay;
+        radial-gradient(circle at 50% 45%, rgba(255,255,255,0.06), rgba(0,0,0,0.55) 70%);
+      mix-blend-mode: overlay;
+      opacity: .45;
     }
 
-    /* Grain overlay (70s) */
-    .grain{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:var(--grainOpacity);
-      background:
-        radial-gradient(circle at 15% 20%, rgba(0,0,0,.06) 0%, rgba(0,0,0,0) 35%),
-        radial-gradient(circle at 80% 30%, rgba(0,0,0,.05) 0%, rgba(0,0,0,0) 40%),
-        radial-gradient(circle at 40% 80%, rgba(0,0,0,.04) 0%, rgba(0,0,0,0) 40%),
-        repeating-linear-gradient(45deg, rgba(0,0,0,.02) 0px, rgba(0,0,0,.02) 1px, rgba(0,0,0,0) 6px);
-      mix-blend-mode:multiply;
+    body[data-theme="arcade"]{
+      --bg:#05030c;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.94);
+      --muted:rgba(255,255,255,.78);
+      --muted2:rgba(255,255,255,.62);
+      --border:rgba(167,139,250,.35);
+
+      --accent:#22d3ee;
+      --glow1: rgba(34,211,238,.22);
+      --glow2: rgba(167,139,250,.18);
+
+      --font: var(--font-mono);
+      letter-spacing: .2px;
     }
 
-    .card{
-      width:min(900px, 100%);
-      background:var(--surface);
-      border:var(--frameBorderWidth) solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:24px;
-      position:relative;
-      isolation:isolate;
-    }
-
-    /* Arcade pixel corners */
-    .corner{
-      position:absolute;
-      width:14px; height:14px;
-      background:var(--accent);
-      opacity: calc(var(--usePixelCorners) * .9);
-      pointer-events:none;
-    }
-    .c1{top:-7px; left:-7px}
-    .c2{top:-7px; right:-7px}
-    .c3{bottom:-7px; left:-7px}
-    .c4{bottom:-7px; right:-7px}
-
-    header{
-      display:flex;
-      gap:16px;
-      flex-wrap:wrap;
-      align-items:flex-start;
-      justify-content:space-between;
-      padding-bottom:18px;
-      margin-bottom:18px;
-      border-bottom:1px solid var(--border);
+    body[data-theme="arcade"] .card{
+      border:1px solid rgba(34,211,238,.35);
+      box-shadow:
+        0 0 0 2px rgba(167,139,250,.25),
+        0 0 32px rgba(34,211,238,.16),
+        0 0 60px rgba(167,139,250,.10),
+        0 18px 60px rgba(0,0,0,.55);
     }
 
     body[data-theme="arcade"] header{
-      border-bottom:4px solid var(--border);
+      border-bottom:1px solid rgba(34,211,238,.25);
+    }
+
+    body[data-theme="arcade"] header::after{
+      content:"INSERT COIN";
+      display:inline-block;
+      margin-top:10px;
+      padding:6px 10px;
+      border:1px solid rgba(167,139,250,.35);
+      border-radius:999px;
+      color:rgba(255,255,255,.85);
+      background:rgba(0,0,0,.20);
+      font-size:.84rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 0 18px rgba(34,211,238,.12);
+    }
+
+    body[data-theme="arcade"] .toggle,
+    body[data-theme="arcade"] .pill,
+    body[data-theme="arcade"] .link,
+    body[data-theme="arcade"] .featured,
+    body[data-theme="arcade"] .themebtn,
+    body[data-theme="arcade"] .pay-item{
+      border-color: rgba(34,211,238,.28);
+      background: rgba(0,0,0,.18);
+      box-shadow:
+        0 0 0 2px rgba(167,139,250,.18),
+        0 0 22px rgba(34,211,238,.10);
+    }
+
+    body[data-theme="arcade"] .link:hover,
+    body[data-theme="arcade"] .pill:hover,
+    body[data-theme="arcade"] .featured:hover,
+    body[data-theme="arcade"] .pay-item:hover{
+      border-color: rgba(34,211,238,.55);
+      box-shadow:
+        0 0 0 2px rgba(167,139,250,.25),
+        0 0 30px rgba(34,211,238,.18);
+    }
+
+    body[data-theme="arcade"] .tag,
+    body[data-theme="arcade"] .pay-tag{
+      border-color: rgba(167,139,250,.35);
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.78);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    body[data-theme="arcade"] h1,
+    body[data-theme="arcade"] .section h2{
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ===========================
+       DECADE UPGRADES
+       ===========================*/
+
+    /* 70s */
+    body[data-theme="seventies"]{
+      --bg:#0c0703;
+      --accent:#fbbf24;
+      --glow1:rgba(251,191,36,.22);
+      --glow2:rgba(244,114,182,.10);
+      --border:rgba(251,191,36,.18);
+      --font: var(--font-serif);
+    }
+    body[data-theme="seventies"] .card{
+      border-color: rgba(251,191,36,.22);
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(251,191,36,.08), transparent 42%),
+        radial-gradient(circle at 80% 30%, rgba(244,114,182,.06), transparent 46%),
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      box-shadow:
+        0 18px 70px rgba(0,0,0,.55),
+        0 0 0 1px rgba(251,191,36,.12);
     }
     body[data-theme="seventies"] header{
-      border-bottom:2px dashed rgba(47,31,22,.35);
+      border-bottom:1px dashed rgba(251,191,36,.22);
+    }
+    body[data-theme="seventies"] h1{
+      letter-spacing:.5px;
+    }
+    body[data-theme="seventies"] .toggle,
+    body[data-theme="seventies"] .pill{
+      border-radius:999px;
+      border-color: rgba(251,191,36,.18);
+      background: rgba(0,0,0,.14);
+      box-shadow:
+        0 0 0 1px rgba(244,114,182,.10),
+        0 10px 0 rgba(0,0,0,.18);
+    }
+    body[data-theme="seventies"] .featured,
+    body[data-theme="seventies"] .link{
+      border-radius: 20px;
+      border-color: rgba(251,191,36,.16);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      box-shadow: 0 12px 0 rgba(0,0,0,.16);
+    }
+    body[data-theme="seventies"] .tag{
+      border-color: rgba(251,191,36,.18);
+      background: rgba(0,0,0,.18);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      font-size: .82rem;
+    }
+
+    /* 80s */
+    body[data-theme="eighties"]{
+      --bg:#040313;
+      --accent:#fb7185;
+      --glow1:rgba(251,113,133,.22);
+      --glow2:rgba(34,211,238,.14);
+      --border:rgba(34,211,238,.22);
+      --font: var(--font-rounded);
+    }
+    body[data-theme="eighties"]::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.35;
+      background:
+        linear-gradient(to bottom, rgba(251,113,133,.00) 0%, rgba(251,113,133,.08) 70%, rgba(251,113,133,.18) 100%),
+        repeating-linear-gradient(to right, rgba(34,211,238,.14) 0px, rgba(34,211,238,.14) 1px, rgba(0,0,0,0) 70px),
+        repeating-linear-gradient(to bottom, rgba(34,211,238,.10) 0px, rgba(34,211,238,.10) 1px, rgba(0,0,0,0) 70px);
+      mix-blend-mode: screen;
+    }
+    body[data-theme="eighties"] .card{
+      border-color: rgba(34,211,238,.28);
+      background:
+        radial-gradient(circle at 20% 15%, rgba(251,113,133,.10), transparent 45%),
+        radial-gradient(circle at 90% 10%, rgba(34,211,238,.10), transparent 40%),
+        linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.06));
+      box-shadow:
+        0 0 0 2px rgba(34,211,238,.12),
+        0 0 40px rgba(251,113,133,.14),
+        0 18px 70px rgba(0,0,0,.60);
     }
     body[data-theme="eighties"] header{
-      border-bottom:1px solid rgba(60,255,235,.55);
-      box-shadow: 0 10px 0 rgba(255,79,216,.10);
+      border-bottom:1px solid rgba(34,211,238,.22);
+    }
+    body[data-theme="eighties"] .toggle,
+    body[data-theme="eighties"] .pill,
+    body[data-theme="eighties"] .link,
+    body[data-theme="eighties"] .featured,
+    body[data-theme="eighties"] .themebtn,
+    body[data-theme="eighties"] .pay-item{
+      border-color: rgba(34,211,238,.24);
+      background: rgba(0,0,0,.18);
+      box-shadow:
+        0 0 0 2px rgba(251,113,133,.10),
+        0 0 26px rgba(34,211,238,.10);
+    }
+    body[data-theme="eighties"] .tag,
+    body[data-theme="eighties"] .pay-tag{
+      border-color: rgba(251,113,133,.22);
+      background: rgba(0,0,0,.22);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size:.82rem;
+    }
+
+    /* 90s */
+    body[data-theme="nineties"]{
+      --bg:#050708;
+      --accent:#34d399;
+      --glow1:rgba(52,211,153,.18);
+      --glow2:rgba(125,211,252,.10);
+      --border:rgba(255,255,255,.20);
+      --font: var(--font-sans);
+    }
+    body[data-theme="nineties"] .card{
+      border-radius: 14px;
+      border-color: rgba(255,255,255,.20);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.07));
+      box-shadow:
+        inset 2px 2px 0 rgba(255,255,255,.10),
+        inset -2px -2px 0 rgba(0,0,0,.30),
+        0 18px 60px rgba(0,0,0,.55);
     }
     body[data-theme="nineties"] header{
-      border-bottom:2px solid var(--border);
+      border-bottom:2px solid rgba(255,255,255,.16);
     }
-
-    .identity h1{
-      margin:0;
-      font-size:28px;
-      letter-spacing:.2px;
-      line-height:1.2;
-    }
-
-    body[data-theme="seventies"] .identity h1{
-      font-size:34px;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-    }
-
-    .identity .metaLine{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
-    }
-
-    .infoBox{
-      background:var(--surface2);
-      border:var(--panelBorderWidth) solid var(--border);
-      border-radius: var(--radius2);
-      padding:12px 14px;
-      min-width: 260px;
-      box-shadow: var(--shadow2);
-    }
-
-    /* Arcade info box */
-    body[data-theme="arcade"] .infoBox{
-      border:4px solid var(--border);
-      border-radius: 0px;
-      background: rgba(0,0,0,.18);
-      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
-    }
-
-    /* 70s info box gets a “sticker” feel */
-    body[data-theme="seventies"] .infoBox{
-      border:2px solid rgba(47,31,22,.25);
-      background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.25));
-      box-shadow: 0 14px 0 rgba(90,59,44,.10);
-    }
-
-    /* 80s info box gets neon stroke */
-    body[data-theme="eighties"] .infoBox{
-      border:1px solid rgba(60,255,235,.75);
-      box-shadow:
-        0 0 0 3px rgba(60,255,235,.15),
-        0 0 28px rgba(255,79,216,.18);
-      background: rgba(7,8,31,.72);
-      backdrop-filter: blur(6px);
-    }
-
-    /* 90s info box bevel */
-    body[data-theme="nineties"] .infoBox{
-      border:2px solid var(--border);
+    body[data-theme="nineties"] .toggle,
+    body[data-theme="nineties"] .pill,
+    body[data-theme="nineties"] .link,
+    body[data-theme="nineties"] .featured,
+    body[data-theme="nineties"] .themebtn,
+    body[data-theme="nineties"] .pay-item{
       border-radius: 10px;
-      background: linear-gradient(180deg, #f7f9ff, #dbe4f6);
-      box-shadow: 2px 2px 0 rgba(0,0,0,.18);
-    }
-
-    .infoBox .label{
-      font-size:12px;
-      color:var(--muted);
-      letter-spacing:.2px;
-    }
-    .infoBox .value{
-      margin-top:6px;
-      font-size:14px;
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:18px;
-    }
-    @media (max-width: 900px){
-      .grid{grid-template-columns:1fr}
-      .infoBox{min-width: unset; width: 100%;}
-    }
-
-    section{
-      border:var(--panelBorderWidth) solid var(--border);
-      border-radius: var(--radius2);
-      background:var(--surface);
-      box-shadow: var(--shadow2);
-      padding:18px;
-    }
-
-    /* Arcade panels */
-    body[data-theme="arcade"] section{
-      border:4px solid var(--border);
-      border-radius: 0px;
-      background: rgba(0,0,0,.18);
-      box-shadow: 8px 8px 0 rgba(0,0,0,.35);
-    }
-
-    /* 80s panels */
-    body[data-theme="eighties"] section{
-      background: rgba(10,11,38,.75);
-      border: 1px solid rgba(60,255,235,.55);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
       box-shadow:
-        0 0 0 3px rgba(60,255,235,.10),
-        0 0 34px rgba(255,79,216,.16);
-      backdrop-filter: blur(6px);
+        inset 2px 2px 0 rgba(255,255,255,.10),
+        inset -2px -2px 0 rgba(0,0,0,.28);
     }
-
-    /* 90s panels bevel */
-    body[data-theme="nineties"] section{
-      background: linear-gradient(180deg, #f7f9ff, #dbe4f6);
-      border:2px solid var(--border);
-      box-shadow: 2px 2px 0 rgba(0,0,0,.18);
+    body[data-theme="nineties"] .link:hover,
+    body[data-theme="nineties"] .pill:hover,
+    body[data-theme="nineties"] .featured:hover,
+    body[data-theme="nineties"] .pay-item:hover{
+      border-color: rgba(52,211,153,.35);
     }
-
-    section h2{
-      margin:0 0 12px 0;
-      font-size:14px;
-      letter-spacing:.2px;
-    }
-
-    body[data-theme="seventies"] section h2{
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:1px;
-    }
-
-    .bio{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-      margin:0;
-    }
-
-    body[data-theme="arcade"] .bio{
-      font-size:12px;
-    }
-
-    .actions{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:10px;
-      margin-top:14px;
-    }
-    @media (max-width: 520px){
-      .actions{grid-template-columns:1fr;}
-    }
-
-    .btn{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px 12px;
-      border-radius: 12px;
-      border:1px solid var(--border);
-      background:#ffffff;
-      text-decoration:none;
-      color:var(--text);
-      font-weight:600;
-      font-size:14px;
-      box-shadow: 0 1px 0 rgba(0,0,0,.03);
-      transition: transform .08s ease, box-shadow .08s ease, border-color .08s ease;
-    }
-
-    .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(2,6,23,.08);
-      border-color: rgba(37,99,235,.35);
-    }
-
-    .btn:focus, .link:focus, .themeToggle:focus, select:focus, button:focus{
-      outline: 3px solid rgba(37,99,235,.30);
-      outline-offset: 2px;
-    }
-
-    /* Primary buttons */
-    .btn.primary{
-      background: linear-gradient(180deg, rgba(37,99,235,.10), rgba(37,99,235,.04));
-      border-color: rgba(37,99,235,.35);
-    }
-
-    /* 70s buttons: fat + playful */
-    body[data-theme="seventies"] .btn{
-      border-radius: 999px;
-      border:2px solid rgba(47,31,22,.30);
-      background: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.30));
-      box-shadow: 0 10px 0 rgba(90,59,44,.10);
-      font-weight: 600;
-    }
-    body[data-theme="seventies"] .btn.primary{
-      border-color: rgba(224,90,43,.35);
-      box-shadow: 0 10px 0 rgba(224,90,43,.12);
-    }
-
-    /* 80s buttons: neon outline + glow */
-    body[data-theme="eighties"] .btn{
-      border-radius: 14px;
-      background: rgba(7,8,31,.55);
-      border:1px solid rgba(60,255,235,.70);
-      box-shadow:
-        0 0 0 3px rgba(60,255,235,.12),
-        0 0 24px rgba(255,79,216,.18);
-      color: var(--text);
-    }
-    body[data-theme="eighties"] .btn.primary{
-      border-color: rgba(255,79,216,.70);
-      box-shadow:
-        0 0 0 3px rgba(255,79,216,.12),
-        0 0 28px rgba(60,255,235,.18);
-    }
-    body[data-theme="eighties"] .btn:hover{
-      box-shadow:
-        0 0 0 3px rgba(60,255,235,.18),
-        0 0 36px rgba(255,79,216,.26);
-      transform: translateY(-1px);
-    }
-
-    /* 90s buttons: bevel */
-    body[data-theme="nineties"] .btn{
-      border-radius: 6px;
-      border:2px solid var(--border);
-      background: linear-gradient(180deg, #ffffff, #d7e1f6);
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.75),
-        inset -2px -2px 0 rgba(0,0,0,.15),
-        2px 2px 0 rgba(0,0,0,.18);
-      font-weight: 700;
-    }
-    body[data-theme="nineties"] .btn:active{
-      transform: translateY(1px);
-      box-shadow:
-        inset -2px -2px 0 rgba(255,255,255,.55),
-        inset 2px 2px 0 rgba(0,0,0,.18),
-        1px 1px 0 rgba(0,0,0,.18);
-    }
-
-    /* Arcade buttons */
-    body[data-theme="arcade"] .btn{
-      border-radius: 0px;
-      border:3px solid var(--border);
-      background: rgba(0,0,0,.18);
-      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
-      font-weight: 400;
-    }
-    body[data-theme="arcade"] .btn.primary{
-      background: rgba(0,0,0,.22);
-      border-color: var(--border);
-    }
-
-    .links{
-      display:grid;
-      gap:10px;
-    }
-
-    .link{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 12px;
-      border-radius: 12px;
-      border:1px solid var(--border);
-      background:#ffffff;
-      text-decoration:none;
-      color:var(--text);
-      font-size:14px;
-      box-shadow: 0 1px 0 rgba(0,0,0,.03);
-      transition: transform .08s ease, box-shadow .08s ease, border-color .08s ease;
-    }
-
-    .link:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(2,6,23,.08);
-      border-color: rgba(14,165,233,.35);
-    }
-
-    .link .hint{
-      color:var(--muted);
-      font-size:12px;
-      white-space:nowrap;
-    }
-
-    /* 80s links: neon */
-    body[data-theme="eighties"] .link{
-      background: rgba(7,8,31,.55);
-      border:1px solid rgba(60,255,235,.70);
-      box-shadow:
-        0 0 0 3px rgba(60,255,235,.10),
-        0 0 22px rgba(255,79,216,.16);
-    }
-    body[data-theme="eighties"] .link:hover{
-      box-shadow:
-        0 0 0 3px rgba(60,255,235,.18),
-        0 0 32px rgba(255,79,216,.24);
-    }
-
-    /* 90s links bevel */
-    body[data-theme="nineties"] .link{
-      border-radius: 6px;
-      border:2px solid var(--border);
-      background: linear-gradient(180deg, #ffffff, #d7e1f6);
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.75),
-        inset -2px -2px 0 rgba(0,0,0,.15),
-        2px 2px 0 rgba(0,0,0,.18);
-    }
-    body[data-theme="nineties"] .link:active{
-      transform: translateY(1px);
-    }
-
-    /* 70s links: pill + sticker */
-    body[data-theme="seventies"] .link{
-      border-radius: 999px;
-      border:2px solid rgba(47,31,22,.28);
-      background: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.30));
-      box-shadow: 0 10px 0 rgba(90,59,44,.10);
-      font-weight: 600;
-    }
-
-    /* Arcade links */
-    body[data-theme="arcade"] .link{
-      border-radius: 0px;
-      border:3px solid var(--border);
-      background: rgba(0,0,0,.18);
-      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
-      font-size:12px;
-    }
-    body[data-theme="arcade"] .link .hint{font-size:10px;}
-
-    footer{
-      margin-top:16px;
-      padding-top:14px;
-      border-top:1px solid var(--border);
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    body[data-theme="arcade"] footer{ border-top:4px solid var(--border); }
-    body[data-theme="seventies"] footer{ border-top:2px dashed rgba(47,31,22,.30); }
-    body[data-theme="eighties"] footer{ border-top:1px solid rgba(60,255,235,.55); }
-    body[data-theme="nineties"] footer{ border-top:2px solid var(--border); }
-
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:12px;
-      color:var(--muted);
-      background:var(--surface2);
-      border:1px solid var(--border);
-      padding:4px 8px;
+    body[data-theme="nineties"] .tag,
+    body[data-theme="nineties"] .pay-tag{
       border-radius: 8px;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-    }
-
-    body[data-theme="arcade"] .kbd{
-      border:3px solid var(--border);
-      border-radius:0px;
-      background: rgba(0,0,0,.18);
-      box-shadow: 6px 6px 0 rgba(0,0,0,.35);
-      font-size:10px;
-    }
-
-    body[data-theme="nineties"] .kbd{
-      border-radius: 6px;
-      border:2px solid var(--border);
-      background: linear-gradient(180deg, #ffffff, #d7e1f6);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
       box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.75),
-        inset -2px -2px 0 rgba(0,0,0,.15);
-    }
-
-    .themeArea{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      justify-content:flex-end;
-      flex-wrap:wrap;
-    }
-
-    .themeToggle{
-      background:transparent;
-      border:none;
-      color:var(--muted);
-      padding:6px 8px;
-      cursor:pointer;
-      font:inherit;
-      text-decoration:underline;
-      border-radius:8px;
-    }
-    .themeToggle:hover{color:var(--text)}
-
-    .themePicker{
-      display:none;
-      align-items:center;
-      gap:8px;
-    }
-
-    .themePicker select{
-      font:inherit;
-      color:var(--text);
-      background:var(--surface2);
-      border:1px solid var(--border);
-      padding:8px 10px;
-      border-radius: 10px;
-      cursor:pointer;
-    }
-
-    body[data-theme="eighties"] .themePicker select{
-      background: rgba(7,8,31,.55);
-      border:1px solid rgba(60,255,235,.70);
-      box-shadow: 0 0 0 3px rgba(60,255,235,.10);
-      border-radius: 14px;
-      color: var(--text);
-    }
-
-    body[data-theme="nineties"] .themePicker select{
-      border:2px solid var(--border);
-      border-radius: 6px;
-      background: linear-gradient(180deg, #ffffff, #d7e1f6);
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,.75),
-        inset -2px -2px 0 rgba(0,0,0,.15);
-    }
-
-    body[data-theme="arcade"] .themePicker select{
-      border:3px solid var(--border);
-      border-radius:0px;
-      background: rgba(0,0,0,.18);
-      color: var(--text);
-    }
-
-    .themePicker .tiny{
-      font-size:11px;
-      color:var(--muted);
-      white-space:nowrap;
-    }
-
-    /* Accessibility: ensure link text is always readable */
-    a{ color: inherit; }
-
-    /* Make the 70s theme feel “funky” without sacrificing readability */
-    body[data-theme="seventies"] .identity .metaLine{
-      font-size:15px;
-      letter-spacing:.3px;
+        inset 1px 1px 0 rgba(255,255,255,.10),
+        inset -1px -1px 0 rgba(0,0,0,.25);
     }
   </style>
 </head>
 
-<body>
-  <div class="grain" aria-hidden="true"></div>
+<body data-theme="modern">
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <h1 id="name"></h1>
+        <p class="location" id="location"></p>
+        <p class="about" id="about"></p>
 
-  <main class="card" role="main" aria-label="Jeremy Hart link card">
-    <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+        <div class="meta-row">
+          <button class="toggle" id="aboutToggle" type="button" aria-expanded="false" aria-controls="about-panel">
+            About
+          </button>
+        </div>
 
-    <header>
-      <div class="identity">
-        <h1>Jeremy Hart</h1>
-        <div class="metaLine">Gilford, NH</div>
+        <div id="about-panel" class="about-panel" hidden>
+          <div class="lead" id="aboutLead"></div>
+          <div id="aboutBody"></div>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- Featured section is optional; hidden via JS if showFeatured=false -->
+        <section class="section" id="featuredSection" aria-label="Start here">
+          <a class="featured" id="featuredLink" href="#" target="_blank" rel="noopener">
+            <strong id="featuredTitle"></strong>
+            <span id="featuredDesc"></span>
+          </a>
+        </section>
+
+        <section class="section" id="contact" aria-label="Contact">
+          <h2>Contact</h2>
+          <p id="contactNote"></p>
+
+          <div class="pillrow">
+            <a class="pill" id="callLink" href="#">Call</a>
+            <a class="pill" id="textLink" href="#">Text</a>
+            <a class="pill" id="emailLink" href="#">Email</a>
+            <a class="pill" id="vcfLink" href="#">Add to contacts <small>(VCF)</small></a>
+          </div>
+        </section>
+
+        <section class="section" aria-label="Links">
+          <h2>Links</h2>
+          <div class="grid" id="linksGrid"></div>
+        </section>
       </div>
 
-      <div class="infoBox" aria-label="Info panel">
-        <div class="label" id="infoLabel">About</div>
-        <div class="value" id="infoValue">Fitness • Technology • Theatre</div>
-      </div>
-    </header>
+      <footer>
+        <div>© <span id="year"></span> <span id="footerName"></span></div>
+        <div class="kbdhint">Press <kbd>Enter</kbd> to jump to Contact</div>
 
-    <div class="grid">
-      <section id="contact" aria-label="Contact">
-        <h2>Contact</h2>
-        <p class="bio">Fitness, technology, and theatre nerd. This is my link card for contact, socials, and whatever I’m building.</p>
+        <div class="theme-wrap">
+          <button class="toggle" id="payToggle" type="button" aria-expanded="false" aria-controls="pay-panel" title="Payments">
+            $
+          </button>
 
-        <div class="actions" aria-label="Primary contact actions">
-          <a class="btn primary" href="tel:+19046080347">Call</a>
-          <a class="btn primary" href="sms:+19046080347">Text</a>
-          <a class="btn" href="mailto:jeremy.allan.hart@gmail.com">Email</a>
-          <a class="btn" href="jeremy-hart.vcf" download>Add contact</a>
+          <button class="toggle" id="themeToggle" type="button" aria-expanded="false" aria-controls="theme-panel">
+            Themes
+          </button>
+
+          <div id="pay-panel" class="pay-panel" hidden>
+            <div class="pay-list" id="payList"></div>
+          </div>
+
+          <div id="theme-panel" class="theme-panel" hidden>
+            <div class="theme-row" role="group" aria-label="Themes">
+              <button class="themebtn" data-theme="modern" aria-pressed="true" type="button">Modern</button>
+              <button class="themebtn" data-theme="arcade" aria-pressed="false" type="button">Arcade</button>
+              <button class="themebtn" data-theme="seventies" aria-pressed="false" type="button">70s</button>
+              <button class="themebtn" data-theme="eighties" aria-pressed="false" type="button">80s</button>
+              <button class="themebtn" data-theme="nineties" aria-pressed="false" type="button">90s</button>
+            </div>
+
+            <div class="theme-row" role="group" aria-label="Seasonal themes">
+              <button class="themebtn" data-theme="winter" aria-pressed="false" type="button">Winter</button>
+              <button class="themebtn" data-theme="spring" aria-pressed="false" type="button">Spring</button>
+              <button class="themebtn" data-theme="summer" aria-pressed="false" type="button">Summer</button>
+              <button class="themebtn" data-theme="fall" aria-pressed="false" type="button">Fall</button>
+              <button class="themebtn" data-theme="halloween" aria-pressed="false" type="button">Halloween</button>
+              <button class="themebtn" data-theme="holiday" aria-pressed="false" type="button">Holidays</button>
+              <button class="themebtn" data-seasonal type="button">Auto</button>
+            </div>
+          </div>
         </div>
-      </section>
-
-      <section aria-label="Links">
-        <h2>Links</h2>
-
-        <div class="links">
-          <a class="link" href="https://www.linkedin.com/in/jeremyallanhart/" target="_blank" rel="noopener">
-            <span>LinkedIn</span><span class="hint">Professional</span>
-          </a>
-          <a class="link" href="https://jeremyallanhart.substack.com/" target="_blank" rel="noopener">
-            <span>Substack</span><span class="hint">Writing</span>
-          </a>
-          <a class="link" href="https://www.strava.com/athletes/18895402" target="_blank" rel="noopener">
-            <span>Strava</span><span class="hint">Fitness</span>
-          </a>
-          <a class="link" href="https://www.goodreads.com/user/show/12091117-jeremy-hart" target="_blank" rel="noopener">
-            <span>Goodreads</span><span class="hint">Reading</span>
-          </a>
-          <a class="link" href="https://x.com/jeremyhart" target="_blank" rel="noopener">
-            <span>X</span><span class="hint">Social</span>
-          </a>
-          <a class="link" href="https://www.instagram.com/jeremyallanhart/" target="_blank" rel="noopener">
-            <span>Instagram</span><span class="hint">Social</span>
-          </a>
-          <a class="link" href="https://www.facebook.com/hart.jeremy" target="_blank" rel="noopener">
-            <span>Facebook</span><span class="hint">Social</span>
-          </a>
-        </div>
-      </section>
+      </footer>
     </div>
-
-    <footer>
-      <div>© <span id="year"></span> Jeremy Hart</div>
-
-      <div class="themeArea">
-        <div class="kbd" title="Keyboard shortcut">Press <strong>Enter</strong> to jump to Contact</div>
-        <button class="themeToggle" id="themeToggle" type="button" aria-expanded="false" aria-controls="themePicker">Themes</button>
-
-        <div class="themePicker" id="themePicker" aria-label="Theme picker">
-          <select id="themeSelect" aria-label="Select theme">
-            <option value="modern">Modern</option>
-            <option value="arcade">Arcade</option>
-            <option value="seventies">70s</option>
-            <option value="eighties">80s</option>
-            <option value="nineties">90s</option>
-          </select>
-          <span class="tiny">Tip: add <code>?theme=eighties</code> to the URL</span>
-        </div>
-      </div>
-    </footer>
-  </main>
+  </div>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // ----------------------------
+    // CONFIG (edit this block only)
+    // ----------------------------
+    const SITE = {
+      name: "Jeremy Hart",
+      location: "Gilford, NH",
+      about: "Fitness • Technology • Theatre",
 
-    const THEMES = ["modern","arcade","seventies","eighties","nineties"];
-    const ARCADE = "arcade";
+      contactNote: "Best for quick stuff: text. Longer stuff: email.",
+      phone: "+19046080347",
+      email: "jeremy.allan.hart@gmail.com",
+      vcfPath: "jeremy-hart.vcf",
 
-    const themeToggleBtn = document.getElementById("themeToggle");
-    const themePicker = document.getElementById("themePicker");
-    const themeSelect = document.getElementById("themeSelect");
+      showFeatured: false,
+      featured: {
+        title: "Start here",
+        desc: "Writing, notes, and whatever I’m thinking about lately",
+        url: "https://jeremyallanhart.substack.com/"
+      },
 
-    function applyTheme(theme){
-      document.body.setAttribute("data-theme", theme);
+      aboutExpanded: {
+        lead: "Hi, I’m Jeremy. I’m the kind of person who likes to understand how things work and make things better, whether it’s a project, a process, or something in my own life.",
+        paragraphs: [
+          "I’m naturally curious, and I’m usually happiest when I’m learning, building, or solving a problem.",
+          "I’m a dad, and that’s a big part of what grounds me. I care a lot about leadership and how the mind works, especially how people grow, make decisions, and handle pressure.",
+          "The Bible and Stoic philosophy have both shaped how I think about responsibility, discipline, and perspective. I also served in the U.S. Marine Corps, which reinforced those values and taught me the importance of staying calm under pressure.",
+          "One saying that stuck with me is “slow is smooth, smooth is fast,” and I’ve found it applies to most things worth doing. I like pushing my limits and improving over time, mostly through consistency. Fitness helps me stay centered, music is always in the mix, and I believe growth usually starts by getting comfortable being uncomfortable."
+        ]
+      },
+
+      links: [
+        { title: "Work stuff",        tag: "Professional", desc: "LinkedIn",  url: "https://www.linkedin.com/in/jeremyallanhart/" },
+        { title: "Read my writing",   tag: "Writing",      desc: "Substack",  url: "https://jeremyallanhart.substack.com/" },
+        { title: "Training log",      tag: "Fitness",      desc: "Strava",    url: "https://www.strava.com/athletes/18895402" },
+        { title: "What I’m reading",  tag: "Reading",      desc: "Goodreads", url: "https://www.goodreads.com/user/show/12091117-jeremy-hart" },
+        { title: "Short updates",     tag: "Social",       desc: "X",         url: "https://x.com/jeremyhart" },
+        { title: "Photos and life",   tag: "Social",       desc: "Instagram", url: "https://www.instagram.com/jeremyallanhart/" },
+        { title: "Facebook",          tag: "Social",       desc: "Facebook",  url: "https://www.facebook.com/hart.jeremy" }
+      ],
+
+      payments: [
+        { title: "Cash App", tag: "Payments", desc: "$jeremyallanhart", url: "https://cash.app/$jeremyallanhart" },
+        { title: "Venmo",    tag: "Payments", desc: "@jeremyhart",      url: "https://venmo.com/jeremyhart" }
+      ]
+    };
+
+    // ----------------------------
+    // Helpers
+    // ----------------------------
+    const $ = (id) => document.getElementById(id);
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
 
-    function getUrlTheme(){
-      const raw = new URLSearchParams(window.location.search).get("theme");
-      const t = (raw || "").toLowerCase();
-      return THEMES.includes(t) ? t : null;
+    // ----------------------------
+    // Populate from config
+    // ----------------------------
+    $("year").textContent = new Date().getFullYear();
+
+    $("name").textContent = SITE.name;
+    $("footerName").textContent = SITE.name;
+    $("location").textContent = SITE.location;
+    $("about").textContent = SITE.about;
+
+    $("contactNote").textContent = SITE.contactNote;
+
+    $("callLink").href = `tel:${SITE.phone}`;
+    $("textLink").href = `sms:${SITE.phone}`;
+    $("emailLink").href = `mailto:${SITE.email}`;
+    $("vcfLink").href = SITE.vcfPath;
+
+    // Featured section (optional)
+    const featuredSection = $("featuredSection");
+    if (!SITE.showFeatured){
+      featuredSection.remove();
+    } else {
+      $("featuredTitle").textContent = SITE.featured.title;
+      $("featuredDesc").textContent = SITE.featured.desc;
+      $("featuredLink").href = SITE.featured.url;
     }
 
-    function setInfoForTheme(theme){
-      const label = document.getElementById("infoLabel");
-      const value = document.getElementById("infoValue");
-      if (!label || !value) return;
+    // About expanded (paragraphs)
+    $("aboutLead").textContent = SITE.aboutExpanded.lead;
+    const aboutBody = $("aboutBody");
+    aboutBody.innerHTML = "";
+    (SITE.aboutExpanded.paragraphs || []).forEach((p) => {
+      const para = document.createElement("p");
+      para.textContent = p;
+      aboutBody.appendChild(para);
+    });
 
-      if (theme === ARCADE){
-        label.textContent = "PRESS START";
-        value.textContent = "ENTER";
-      } else if (theme === "eighties"){
-        label.textContent = "RAD MODE";
-        value.textContent = "Neon • Synth • Links";
-      } else if (theme === "seventies"){
-        label.textContent = "GOOD VIBES";
-        value.textContent = "Fitness • Tech • Theatre";
-      } else if (theme === "nineties"){
-        label.textContent = "WELCOME";
-        value.textContent = "Best viewed with curiosity";
-      } else {
-        label.textContent = "About";
-        value.textContent = "Fitness • Technology • Theatre";
+    // Links grid (title + tag + desc)
+    const grid = $("linksGrid");
+    grid.innerHTML = "";
+    SITE.links.forEach((l) => {
+      const a = document.createElement("a");
+      a.className = "link";
+      a.href = l.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+
+      a.innerHTML = `
+        <div class="top">
+          <strong>${escapeHtml(l.title)}</strong>
+          <span class="tag">${escapeHtml(l.tag)}</span>
+        </div>
+        <div class="desc">${escapeHtml(l.desc)}</div>
+      `;
+      grid.appendChild(a);
+    });
+
+    // Payments list
+    const payList = $("payList");
+    payList.innerHTML = "";
+    (SITE.payments || []).forEach((p) => {
+      const a = document.createElement("a");
+      a.className = "pay-item";
+      a.href = p.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.innerHTML = `
+        <div class="pay-left">
+          <div class="pay-title">${escapeHtml(p.title)}</div>
+          <div class="pay-desc">${escapeHtml(p.desc || "")}</div>
+        </div>
+        <div class="pay-tag">${escapeHtml(p.tag || "Payments")}</div>
+      `;
+      payList.appendChild(a);
+    });
+
+    // ----------------------------
+    // Enter jumps to Contact
+    // ----------------------------
+    document.addEventListener("keydown", (e) => {
+      const tag = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toLowerCase() : "";
+      if (tag === "button" || tag === "a" || tag === "input" || tag === "textarea" || tag === "select") return;
+      if (e.key === "Enter") $("contact")?.scrollIntoView({behavior:"smooth"});
+    });
+
+    // ----------------------------
+    // About toggle
+    // ----------------------------
+    const aboutToggle = $("aboutToggle");
+    const aboutPanel = $("about-panel");
+
+    function setAboutOpen(open){
+      aboutToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      aboutPanel.hidden = !open;
+    }
+
+    aboutToggle.addEventListener("click", () => {
+      const open = aboutToggle.getAttribute("aria-expanded") === "true";
+      setAboutOpen(!open);
+    });
+
+    // ----------------------------
+    // Theme + payments toggles
+    // ----------------------------
+    const themeToggle = $("themeToggle");
+    const themePanel = $("theme-panel");
+
+    const payToggle = $("payToggle");
+    const payPanel = $("pay-panel");
+
+    function setThemePanelOpen(open){
+      themeToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      themePanel.hidden = !open;
+      if (open) setPayPanelOpen(false);
+    }
+    function setPayPanelOpen(open){
+      payToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      payPanel.hidden = !open;
+      if (open) setThemePanelOpen(false);
+    }
+
+    themeToggle.addEventListener("click", () => {
+      const open = themeToggle.getAttribute("aria-expanded") === "true";
+      setThemePanelOpen(!open);
+    });
+
+    payToggle.addEventListener("click", () => {
+      const open = payToggle.getAttribute("aria-expanded") === "true";
+      setPayPanelOpen(!open);
+    });
+
+    // Close panels on outside click
+    document.addEventListener("click", (e) => {
+      const inTheme = e.target.closest("#theme-panel") || e.target.closest("#themeToggle");
+      const inPay = e.target.closest("#pay-panel") || e.target.closest("#payToggle");
+      if (!inTheme) setThemePanelOpen(false);
+      if (!inPay) setPayPanelOpen(false);
+    });
+
+    // Escape closes panels
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape"){
+        setThemePanelOpen(false);
+        setPayPanelOpen(false);
+        setAboutOpen(false);
+      }
+    });
+
+    // ----------------------------
+    // Theme handling: URL param > manual stored > seasonal auto
+    // ----------------------------
+    const valid = new Set([
+      "modern","arcade","seventies","eighties","nineties",
+      "winter","spring","summer","fall",
+      "halloween","holiday"
+    ]);
+
+    const themeButtons = [...document.querySelectorAll(".themebtn")];
+    const body = document.body;
+
+    function getSeasonalTheme(d = new Date()){
+      const m = d.getMonth() + 1;
+      const day = d.getDate();
+
+      if (m === 10 && day >= 25) return "halloween";
+      if (m === 12 && day >= 10) return "holiday";
+
+      if (m === 12 || m === 1 || m === 2) return "winter";
+      if (m >= 3 && m <= 5) return "spring";
+      if (m >= 6 && m <= 8) return "summer";
+      return "fall";
+    }
+
+    function setTheme(theme, { persist=true, reason="manual", updateUrl=true } = {}){
+      if (!valid.has(theme)) theme = "modern";
+      body.setAttribute("data-theme", theme);
+
+      themeButtons.forEach(b => {
+        const t = b.dataset.theme;
+        if (!t) return;
+        b.setAttribute("aria-pressed", t === theme ? "true" : "false");
+      });
+
+      if (persist){
+        localStorage.setItem("theme", theme);
+        localStorage.setItem("theme_reason", reason);
+      }
+
+      if (updateUrl){
+        const u = new URL(location.href);
+        u.searchParams.set("theme", theme);
+        history.replaceState({}, "", u);
       }
     }
 
-    const urlTheme = getUrlTheme();
-    const saved = localStorage.getItem("jh_theme");
-    const initial = urlTheme || (THEMES.includes(saved) ? saved : "modern");
+    function setAutoSeasonal(){
+      localStorage.removeItem("theme");
+      localStorage.removeItem("theme_reason");
+      const auto = getSeasonalTheme();
+      body.setAttribute("data-theme", auto);
 
-    applyTheme(initial);
-    setInfoForTheme(initial);
-    themeSelect.value = initial;
+      themeButtons.forEach(b => {
+        const t = b.dataset.theme;
+        if (!t) return;
+        b.setAttribute("aria-pressed", t === auto ? "true" : "false");
+      });
 
-    themeToggleBtn.addEventListener("click", () => {
-      const isOpen = themePicker.style.display === "inline-flex";
-      themePicker.style.display = isOpen ? "none" : "inline-flex";
-      themeToggleBtn.setAttribute("aria-expanded", String(!isOpen));
-      if (!isOpen) themeSelect.focus();
-    });
+      const u = new URL(location.href);
+      u.searchParams.delete("theme");
+      history.replaceState({}, "", u);
+    }
 
-    themeSelect.addEventListener("change", () => {
-      const val = themeSelect.value;
-      applyTheme(val);
-      setInfoForTheme(val);
-      localStorage.setItem("jh_theme", val);
-    });
+    // Initial theme pick
+    const params = new URLSearchParams(location.search);
+    const fromUrl = params.get("theme");
 
-    // Enter key: Arcade uses it as "PRESS START", others use it as a shortcut
-    document.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter") return;
+    if (fromUrl && valid.has(fromUrl)){
+      setTheme(fromUrl, { persist:true, reason:"manual", updateUrl:false });
+    } else {
+      const stored = localStorage.getItem("theme");
+      const reason = localStorage.getItem("theme_reason");
+      if (stored && valid.has(stored) && reason === "manual"){
+        setTheme(stored, { persist:false, reason:"manual", updateUrl:false });
+      } else {
+        const auto = getSeasonalTheme();
+        body.setAttribute("data-theme", auto);
+        themeButtons.forEach(b => {
+          const t = b.dataset.theme;
+          if (!t) return;
+          b.setAttribute("aria-pressed", t === auto ? "true" : "false");
+        });
+      }
+    }
 
-      const tag = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toLowerCase() : "";
-      if (tag === "select" || tag === "button" || tag === "input" || tag === "textarea") return;
+    // Theme button clicks
+    themeButtons.forEach(b => {
+      if (b.hasAttribute("data-seasonal")){
+        b.addEventListener("click", () => setAutoSeasonal());
+        return;
+      }
+      const t = b.dataset.theme;
+      if (!t) return;
 
-      const contact = document.getElementById("contact");
-      const firstAction = document.querySelector("#contact .actions a");
-
-      if (contact) contact.scrollIntoView({ behavior: "smooth", block: "start" });
-      if (firstAction) firstAction.focus({ preventScroll: true });
+      b.addEventListener("click", () => {
+        setTheme(t, { persist:true, reason:"manual", updateUrl:true });
+      });
     });
   </script>
 </body>
