@@ -631,6 +631,13 @@
         inset 1px 1px 0 rgba(255,255,255,.10),
         inset -1px -1px 0 rgba(0,0,0,.25);
     }
+    .tagline{
+      margin: 0 0 10px;
+      color: var(--text);
+      opacity: .92;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
   </style>
 </head>
 
@@ -641,6 +648,7 @@
         <div class="headerTop">
           <div class="headText">
             <h1 id="name"></h1>
+            <p class="tagline" id="tagline"></p>
             <p class="location" id="location"></p>
             <p class="about" id="about"></p>
           </div>
@@ -754,6 +762,7 @@
         url: "https://jeremyallanhart.substack.com/"
       },
 
+      tagline: "Curious by default. Resilient and steady. Built through consistency.",
       aboutExpanded: {
         lead: "Hi, I’m Jeremy. I like understanding how things work and making them better, whether that’s a project, a process, or something in my own life.",
         paragraphs: [
@@ -800,6 +809,7 @@
     $("year").textContent = new Date().getFullYear();
 
     $("name").textContent = SITE.name;
+    $("tagline").textContent = SITE.tagline || "";
     $("footerName").textContent = SITE.name;
     $("location").textContent = SITE.location;
     $("about").textContent = SITE.about;
